@@ -6,7 +6,7 @@ import { getSession, getVideo, listSavedVideos, listVideosByCohort } from "@/lib
 import { COHORTS_BY_NAME } from "@/lib/cohorts";
 import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
-import { formatDuration, timeAgo, youtubeWatchUrl } from "@/lib/utils";
+import { formatDuration, timeAgo } from "@/lib/utils";
 import { VideoPlayer } from "@/components/video-player";
 import { ArticulationPrompt } from "@/components/articulation-prompt";
 
@@ -99,9 +99,6 @@ export default async function VideoPage({
                 savedLabel={t(lang, "video.saved")}
                 saveLabel={t(lang, "video.save")}
               />
-              <a href={youtubeWatchUrl(video.id)} target="_blank" rel="noopener" className="btn btn-ghost">
-                {t(lang, "video.open_youtube")}
-              </a>
               {nextVideo && (
                 <Link href={`/video/${nextVideo.id}`} className="btn btn-ghost">
                   Next in path →
