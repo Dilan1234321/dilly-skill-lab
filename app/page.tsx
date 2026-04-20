@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { TodayPanel } from "@/components/today-panel";
 import { EditorialPaths } from "@/components/editorial-paths";
-import { getSession, listTrending, listVideosByCohort } from "@/lib/api";
+import { getProfile, getSession, listTrending, listVideosByCohort } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import {
   getStreak,
@@ -20,6 +20,9 @@ export default async function HomePage() {
     isFirstVisit(),
     getSession().catch(() => null),
   ]);
+  // Only fetch profile when signed in — anonymous visits stay cheap.
+  const profile = session ? await getProfile().catch(() => null) : null;
+  const firstName = firstNameFrom(profile, session?.email);
 
   const todaySources = lastWatched
     ? await listVideosByCohort(lastWatched.cohort, { limit: 8, sort: "best", lang }).catch(() => [])
@@ -39,6 +42,16 @@ export default async function HomePage() {
 
   return (
     <div>
+      {/* ═══ Signed-in greeting above the Today panel ═══ */}
+      {session && firstName && (
+        <section className="container-app pt-10 sm:pt-14">
+          <div className="eyebrow">Hey {firstName}</div>
+          <h1 className="editorial mt-2 text-[2.2rem] leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
+            What do you want to learn today?
+          </h1>
+        </section>
+      )}
+
       {/* ═══ The living front door — one pick, your state ═══ */}
       {pick ? (
         <TodayPanel
@@ -74,6 +87,26 @@ export default async function HomePage() {
       </section>
     </div>
   );
+}
+
+function firstNameFrom(
+  profile: Record<string, unknown> | null,
+  email?: string | null,
+): string | null {
+  const pickStr = (k: string) => {
+    const v = profile?.[k];
+    return typeof v === "string" && v.trim() ? v.trim() : null;
+  };
+  const first = pickStr("first_name");
+  if (first) return first;
+  const full = pickStr("full_name") || pickStr("name");
+  if (full) return full.split(/\s+/)[0];
+  if (email) {
+    const user = email.split("@")[0];
+    // Capitalize the first letter for a friendlier greeting
+    return user.charAt(0).toUpperCase() + user.slice(1);
+  }
+  return null;
 }
 
 function FirstRunHero({ firstVisit }: { firstVisit: boolean }) {

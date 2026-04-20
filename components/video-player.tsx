@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addTimeToday,
   markWatched,
@@ -8,6 +8,7 @@ import {
   setResumePosition,
   clearResumePosition,
 } from "@/lib/progress-client";
+import { NextVideoBreak } from "./next-video-break";
 
 type YTPlayer = {
   destroy: () => void;
@@ -71,13 +72,18 @@ export function VideoPlayer({
   videoId,
   cohortSlug,
   title,
+  nextVideoId,
+  nextVideoTitle,
 }: {
   videoId: string;
   cohortSlug: string | null;
   title: string;
+  nextVideoId?: string | null;
+  nextVideoTitle?: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
+  const [showBreak, setShowBreak] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -120,6 +126,8 @@ export function VideoPlayer({
             const ENDED = window.YT?.PlayerState.ENDED ?? 0;
             if (state === ENDED) {
               clearResumePosition(videoId);
+              // Auto-advance — handled by the NextVideoBreak overlay below.
+              if (nextVideoId) setShowBreak(true);
             }
           },
         },
@@ -202,6 +210,14 @@ export function VideoPlayer({
   return (
     <div className="relative aspect-video bg-black">
       <div ref={containerRef} className="h-full w-full" aria-label={title} />
+      {nextVideoId && nextVideoTitle && (
+        <NextVideoBreak
+          show={showBreak}
+          nextId={nextVideoId}
+          nextTitle={nextVideoTitle}
+          onCancel={() => setShowBreak(false)}
+        />
+      )}
     </div>
   );
 }

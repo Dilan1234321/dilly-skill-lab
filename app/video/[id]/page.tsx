@@ -58,6 +58,8 @@ export default async function VideoPage({
               videoId={video.id}
               cohortSlug={cohort?.slug ?? null}
               title={video.title}
+              nextVideoId={nextVideo?.id ?? null}
+              nextVideoTitle={nextVideo?.title ?? null}
             />
           </div>
 
