@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { ShortcutsHelp } from "@/components/shortcuts-help";
-import { getSession } from "@/lib/api";
+import { getProfile, getSession } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import { getStreak } from "@/lib/session-state";
 import { t } from "@/lib/i18n";
@@ -28,6 +28,14 @@ export default async function RootLayout({
     getSession().catch(() => null),
     getStreak(),
   ]);
+  // Only fetch the profile when the user is signed in; this drives the nav
+  // avatar's display name and keeps an unauthed visit to zero Dilly calls.
+  const profile = session ? await getProfile().catch(() => null) : null;
+  const displayName =
+    (profile?.full_name as string | undefined)?.trim() ||
+    (profile?.name as string | undefined)?.trim() ||
+    (profile?.first_name as string | undefined)?.trim() ||
+    null;
   return (
     <html lang={lang}>
       <head>
@@ -37,7 +45,12 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <Nav session={session} lang={lang} streak={streak.streak} />
+        <Nav
+          session={session}
+          lang={lang}
+          streak={streak.streak}
+          displayName={displayName}
+        />
         <ShortcutsHelp />
         <main>{children}</main>
         <footer className="container-app mt-24 border-t border-[color:var(--color-border)] py-10 text-sm text-[color:var(--color-muted)]">

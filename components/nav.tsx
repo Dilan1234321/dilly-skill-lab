@@ -6,15 +6,18 @@ import { t } from "@/lib/i18n";
 import { LanguagePicker } from "./language-picker";
 import { StreakChip, TimeInvestedChip } from "./live-nav-state";
 import { CommandTrigger } from "./command-palette";
+import { NavUser } from "./nav-user";
 
 export function Nav({
   session,
   lang,
   streak,
+  displayName,
 }: {
   session: SessionUser | null;
   lang: LangCode;
   streak: number;
+  displayName: string | null;
 }) {
   return (
     <header className="glass sticky top-0 z-50">
@@ -55,11 +58,11 @@ export function Nav({
           </Link>
           <LanguagePicker current={lang} label={t(lang, "nav.language")} />
           {session ? (
-            <form action="/api/sign-out" method="post">
-              <button type="submit" className="btn btn-ghost" aria-label={t(lang, "nav.sign_out")}>
-                {t(lang, "nav.sign_out")}
-              </button>
-            </form>
+            <NavUser
+              name={displayName || session.email}
+              email={session.email}
+              signOutLabel={t(lang, "nav.sign_out")}
+            />
           ) : (
             <Link href="/sign-up" className="btn btn-primary">
               {t(lang, "nav.create_account")}
