@@ -139,4 +139,13 @@ export async function patchProfile(payload: Record<string, unknown>): Promise<bo
   return Boolean(data?.ok ?? data);
 }
 
+/**
+ * Fetches the raw Dilly profile for the signed-in user. Used after verify-code
+ * to detect whether this is a returning user (has a name on file) or a truly
+ * new one who still needs step 3 of sign-up.
+ */
+export async function getProfile(): Promise<Record<string, unknown> | null> {
+  return api<Record<string, unknown>>(`/profile`, { auth: true });
+}
+
 export { SESSION_COOKIE };

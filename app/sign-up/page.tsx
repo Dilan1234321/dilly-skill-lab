@@ -6,6 +6,7 @@ import {
   sendVerificationCode,
   verifyCode,
   patchProfile,
+  getProfile,
 } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
@@ -79,8 +80,20 @@ async function handleVerify(formData: FormData) {
     maxAge: 60 * 60 * 24 * 30,
   });
 
-  // Hop to the profile step with the name pre-loaded — the backend already
-  // has a profile row from verify-code, we just decorate it.
+  // Returning user? Skip the profile form entirely and log them in.
+  // A profile with a name on file means they've done onboarding before
+  // (in the mobile app, dashboard, or a previous Skill Lab signup).
+  const profile = await getProfile().catch(() => null);
+  const hasName = Boolean(
+    (profile?.full_name as string | undefined)?.trim() ||
+      (profile?.name as string | undefined)?.trim() ||
+      (profile?.first_name as string | undefined)?.trim(),
+  );
+  if (hasName) {
+    redirect(next);
+  }
+
+  // New user — collect name/role/goal.
   const q = new URLSearchParams({ name, next, t: ut, step: "profile" });
   redirect(`/sign-up?${q.toString()}`);
 }
