@@ -21,15 +21,15 @@ export function Nav({
   return (
     <header className="glass sticky top-0 z-50">
       <div className="container-app flex h-20 items-center gap-3 sm:h-24 sm:gap-5">
-        {/* ── Logo: tight cluster so "Dilly Skills" sits snug against the wordmark ── */}
-        <Link href="/" className="group flex shrink-0 items-center gap-1.5">
-          <span className="relative block h-12 w-24 sm:h-14 sm:w-28">
+        {/* ── Logo sits on a white pill so it reads cleanly on the cream nav ── */}
+        <Link href="/" className="group flex shrink-0 items-center gap-2">
+          <span className="relative flex h-12 w-24 items-center justify-center rounded-xl bg-white px-3 py-1.5 ring-1 ring-[color:var(--color-border)] transition group-hover:ring-[color:var(--color-accent)]/30 sm:h-14 sm:w-28">
             <Image
               src="/dilly-logo.png"
               alt="dilly"
               fill
               priority
-              className="object-contain"
+              className="object-contain p-1.5"
               sizes="(min-width: 640px) 112px, 96px"
             />
           </span>
