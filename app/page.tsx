@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TodayPanel } from "@/components/today-panel";
 import { EditorialPaths } from "@/components/editorial-paths";
+import { Reveal } from "@/components/reveal";
 import { getProfile, getSession, listTrending, listVideosByCohort } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import {
@@ -66,7 +67,7 @@ export default async function HomePage() {
       )}
 
       {/* ═══ Three editorial paths — the curator's pick ═══ */}
-      <section className="container-app pt-20 sm:pt-28">
+      <Reveal as="section" className="container-app pt-20 sm:pt-28">
         <div className="flex items-end justify-between gap-4 border-b border-[color:var(--color-border)] pb-6">
           <div>
             <div className="eyebrow">Start somewhere</div>
@@ -84,7 +85,7 @@ export default async function HomePage() {
         <div className="mt-8">
           <EditorialPaths />
         </div>
-      </section>
+      </Reveal>
     </div>
   );
 }

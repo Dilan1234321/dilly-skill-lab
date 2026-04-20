@@ -2,17 +2,18 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { ShortcutsHelp } from "@/components/shortcuts-help";
+import { ShortcutTip } from "@/components/shortcut-tip";
 import { getProfile, getSession } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import { getStreak } from "@/lib/session-state";
 import { t } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Dilly Skills by Dilly — a learning library, not a playlist",
+  title: "Dilly Skills",
   description:
     "A careful, human-curated library of learning videos for 22 fields. Start here. Read the curator's notes. Build real skill, not watch history.",
   openGraph: {
-    title: "Dilly Skills by Dilly",
+    title: "Dilly Skills",
     description: "A careful, human-curated library of learning videos for 22 fields.",
     type: "website",
   },
@@ -52,6 +53,7 @@ export default async function RootLayout({
           displayName={displayName}
         />
         <ShortcutsHelp />
+        <ShortcutTip />
         <main>{children}</main>
         <footer className="container-app mt-24 border-t border-[color:var(--color-border)] py-10 text-sm text-[color:var(--color-muted)]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

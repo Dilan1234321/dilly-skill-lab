@@ -7,6 +7,8 @@ import { getLang } from "@/lib/lang-server";
 import { t, DEFAULT_LANG, type LangCode } from "@/lib/i18n";
 import { formatDuration } from "@/lib/utils";
 import type { Video } from "@/lib/types";
+import { cohortHex, hexWithAlpha } from "@/lib/cohort-colors";
+import { Reveal } from "@/components/reveal";
 
 type SortKey = "best" | "newest";
 
@@ -42,29 +44,55 @@ export default async function CohortPage({
   const rest = videos.slice(5);
 
   const channelCount = new Set(videos.map((v) => v.channel_title)).size;
+  const hex = cohortHex(cohort.accent);
 
   return (
     <div>
-      {/* ═══ Compact header strip — name, one tagline, the stats ═══ */}
-      <section className="container-app pt-10 sm:pt-14">
-        <div className="flex flex-col gap-4 border-b border-[color:var(--color-border)] pb-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="min-w-0">
-            <div className="eyebrow">
-              <Link href="/" className="hover:text-[color:var(--color-accent)]">Dilly Skills</Link>
-              <span className="mx-1.5 text-[color:var(--color-dim)]">·</span>
-              Cohort
+      {/* ═══ Cohort hero with a soft tint from the cohort's accent color ═══ */}
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background: `radial-gradient(1100px 280px at 8% -10%, ${hexWithAlpha(hex, 0.28)}, transparent 65%)`,
+        }}
+      >
+        {/* Subtle pattern of floating dots in the accent color */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background: `radial-gradient(${hexWithAlpha(hex, 0.14)} 1px, transparent 1.5px)`,
+            backgroundSize: "22px 22px",
+            maskImage:
+              "linear-gradient(180deg, rgba(0,0,0,0.55), transparent 80%)",
+            WebkitMaskImage:
+              "linear-gradient(180deg, rgba(0,0,0,0.55), transparent 80%)",
+          }}
+        />
+        <div className="container-app relative pt-10 sm:pt-14">
+          <div className="flex flex-col gap-4 border-b border-[color:var(--color-border)] pb-6 sm:flex-row sm:items-end sm:justify-between">
+            <div className="min-w-0">
+              <div className="eyebrow flex items-center gap-1.5">
+                <span
+                  aria-hidden
+                  className="inline-block h-2 w-2 rounded-full"
+                  style={{ background: hex }}
+                />
+                <Link href="/" className="hover:text-[color:var(--color-accent)]">Dilly Skills</Link>
+                <span className="text-[color:var(--color-dim)]">·</span>
+                Cohort
+              </div>
+              <h1 className="editorial mt-2 text-3xl font-semibold leading-[1.05] tracking-tight text-[color:var(--color-text)] sm:text-4xl lg:text-5xl">
+                {cohort.name}
+              </h1>
+              <p className="editorial mt-1.5 text-base italic sm:text-lg" style={{ color: hex }}>
+                {cohort.tagline}
+              </p>
             </div>
-            <h1 className="editorial mt-2 text-3xl font-semibold leading-[1.05] tracking-tight text-[color:var(--color-text)] sm:text-4xl lg:text-5xl">
-              {cohort.name}
-            </h1>
-            <p className="editorial mt-1.5 text-base italic text-[color:var(--color-accent-soft)] sm:text-lg">
-              {cohort.tagline}
-            </p>
-          </div>
-          <div className="flex shrink-0 items-center gap-5 text-sm">
-            <Stat value={String(videos.length)} label="videos" />
-            <span className="h-8 w-px bg-[color:var(--color-border)]" />
-            <Stat value={String(channelCount)} label="channels" />
+            <div className="flex shrink-0 items-center gap-5 text-sm">
+              <Stat value={String(videos.length)} label="videos" />
+              <span className="h-8 w-px bg-[color:var(--color-border)]" />
+              <Stat value={String(channelCount)} label="channels" />
+            </div>
           </div>
         </div>
       </section>
@@ -84,12 +112,12 @@ export default async function CohortPage({
       ) : (
         <>
           {/* ═══ One hero pick + numbered next-4 ═══ */}
-          <section className="container-app pt-8 sm:pt-10">
+          <Reveal as="section" className="container-app pt-8 sm:pt-10">
             <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:gap-10">
               {hero && <HeroPick video={hero} />}
               {nextUp.length > 0 && <NextUpList videos={nextUp} start={2} />}
             </div>
-          </section>
+          </Reveal>
 
           {/* ═══ Everything else, filterable ═══ */}
           {rest.length > 0 && (
@@ -298,10 +326,26 @@ function PlayIcon() {
 
 function EmptyState({ lang }: { lang: LangCode }) {
   return (
-    <div className="card p-12 text-center text-[color:var(--color-muted)]">
-      <div className="text-base">{t(lang, "cohort.empty.title")}</div>
-      <div className="mt-2 text-xs text-[color:var(--color-dim)]">
-        {t(lang, "cohort.empty.subtitle")}
+    <div className="relative overflow-hidden rounded-2xl border border-dashed border-[color:var(--color-border-strong)] bg-white p-10 text-center sm:p-14">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          background: "radial-gradient(#1c2264 1px, transparent 1.5px)",
+          backgroundSize: "18px 18px",
+        }}
+      />
+      <div className="relative mx-auto flex max-w-md flex-col items-center gap-4">
+        <span aria-hidden className="text-3xl">🌱</span>
+        <div className="editorial text-xl leading-tight">
+          {t(lang, "cohort.empty.title")}
+        </div>
+        <div className="text-sm text-[color:var(--color-muted)]">
+          {t(lang, "cohort.empty.subtitle")}
+        </div>
+        <Link href="/" className="btn btn-ghost mt-2">
+          ← Back to home
+        </Link>
       </div>
     </div>
   );

@@ -31,23 +31,42 @@ export function TimeInvestedChip() {
 }
 
 /**
- * Displays the server-known streak. Visually alive via a pulse animation on
- * the dot when the streak is 3+.
+ * Streak chip with milestone styling.
+ *   day 1–2: quiet
+ *   day 3+ : accent pulse
+ *   day 7+ : fire emoji
+ *   day 30+: trophy emoji + stronger glow
  */
 export function StreakChip({ streak }: { streak: number }) {
   if (!streak) return null;
-  const hot = streak >= 3;
+  const milestone =
+    streak >= 30 ? "trophy" : streak >= 14 ? "fire2" : streak >= 7 ? "fire" : streak >= 3 ? "hot" : "warm";
+
+  const icon =
+    milestone === "trophy" ? "🏆" :
+    milestone === "fire2" ? "🔥" :
+    milestone === "fire" ? "🔥" :
+    null;
+
+  const dotClass =
+    milestone === "warm"
+      ? "bg-white/40"
+      : "bg-[color:var(--color-accent)] animate-pulse";
+
+  const chipClass =
+    milestone === "trophy"
+      ? "chip chip-accent shadow-[0_0_0_4px_rgba(28,34,100,0.08)]"
+      : milestone === "warm"
+      ? "chip"
+      : "chip chip-accent";
+
   return (
-    <span
-      className={hot ? "chip chip-accent" : "chip"}
-      title={`${streak}-day streak`}
-    >
-      <span
-        className={
-          "h-1.5 w-1.5 rounded-full " +
-          (hot ? "bg-[color:var(--color-accent)] animate-pulse" : "bg-white/40")
-        }
-      />
+    <span className={chipClass} title={`${streak}-day streak`}>
+      {icon ? (
+        <span aria-hidden className="text-xs leading-none">{icon}</span>
+      ) : (
+        <span className={"h-1.5 w-1.5 rounded-full " + dotClass} />
+      )}
       {streak}-day streak
     </span>
   );

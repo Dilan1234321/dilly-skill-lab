@@ -1,6 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+/** Lightweight confetti — 14 tiny colored rects that fall for 900ms. */
+function Confetti() {
+  const pieces = useMemo(() => {
+    const colors = ["#1c2264", "#7b9fff", "#5ecfb0", "#f5b942"];
+    return Array.from({ length: 14 }, (_, i) => ({
+      left: 8 + (i * 7) + (i % 3) * 2, // percent
+      delay: (i % 5) * 60,
+      color: colors[i % colors.length],
+      rotate: (i * 37) % 360,
+    }));
+  }, []);
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {pieces.map((p, i) => (
+        <span
+          key={i}
+          style={{
+            position: "absolute",
+            left: `${p.left}%`,
+            top: "-10px",
+            width: 7,
+            height: 9,
+            background: p.color,
+            transform: `rotate(${p.rotate}deg)`,
+            borderRadius: 1,
+            animation: `confetti-fall 900ms ${p.delay}ms cubic-bezier(.2,.6,.4,1) forwards`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 /**
  * Articulation prompt — Dilly Skills's core "receipts" mechanic.
@@ -72,17 +105,34 @@ export function ArticulationPrompt({
 
   if (saved) {
     return (
-      <div className="card card-featured mt-5 p-5 text-sm">
-        <div className="flex items-start gap-3">
-          <span aria-hidden className="text-xl">✓</span>
+      <div className="card card-featured relative mt-5 overflow-hidden p-5 text-sm">
+        <Confetti />
+        <div className="relative flex items-start gap-3">
+          <span
+            aria-hidden
+            className="flex h-8 w-8 shrink-0 animate-[receipt-pop_400ms_cubic-bezier(.2,.9,.3,1.4)_both] items-center justify-center rounded-full bg-[color:var(--color-accent)] text-white"
+          >
+            ✓
+          </span>
           <div>
-            <div className="editorial text-base">Receipt saved.</div>
+            <div className="editorial text-base font-bold">Receipt saved.</div>
             <div className="mt-1 text-[color:var(--color-muted)]">
-              It lives on your profile. Every one you add compounds into real
+              It&apos;s on your profile now. Every receipt compounds into real
               evidence of what you&apos;ve learned.
             </div>
           </div>
         </div>
+        <style>{`
+          @keyframes receipt-pop {
+            0% { transform: scale(0.4); opacity: 0; }
+            60% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+          @keyframes confetti-fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(120px) rotate(540deg); opacity: 0; }
+          }
+        `}</style>
       </div>
     );
   }

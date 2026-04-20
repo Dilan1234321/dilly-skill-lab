@@ -4,7 +4,7 @@ import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
 
 export const metadata = {
-  title: "Browse — Dilly Skills",
+  title: "Browse · Dilly Skills",
   description: "Every field and role in Dilly Skills.",
 };
 

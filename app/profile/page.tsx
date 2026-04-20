@@ -10,7 +10,7 @@ import { LearningTrail } from "@/components/learning-trail";
 import { MasterySignals } from "@/components/mastery-signals";
 
 export const metadata = {
-  title: "Your profile — Dilly Skills",
+  title: "Your profile · Dilly Skills",
   description: "The Dilly profile behind your Dilly Skills account.",
 };
 
