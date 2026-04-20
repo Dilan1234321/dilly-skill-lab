@@ -44,7 +44,7 @@ export default async function IndustryPage({
       <section className="container-app pb-10 pt-16 sm:pt-20">
         <div className="max-w-4xl">
           <div className="eyebrow">
-            <Link href="/" className="hover:text-[color:var(--color-accent)]">Skill Lab</Link> · For your role
+            <Link href="/" className="hover:text-[color:var(--color-accent)]">Dilly Skills</Link> · For your role
           </div>
           <h1 className="editorial mt-4 flex flex-wrap items-center gap-4 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
             <span aria-hidden className="text-5xl sm:text-6xl lg:text-7xl">{industry.emoji}</span>

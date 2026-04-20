@@ -8,6 +8,7 @@ import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
 import { formatDuration, timeAgo, youtubeWatchUrl } from "@/lib/utils";
 import { VideoPlayer } from "@/components/video-player";
+import { ArticulationPrompt } from "@/components/articulation-prompt";
 
 export default async function VideoPage({
   params,
@@ -49,7 +50,7 @@ export default async function VideoPage({
             href={cohort ? `/cohort/${cohort.slug}` : "/"}
             className="text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)]"
           >
-            ← {cohort?.name ?? "Skill Lab"}
+            ← {cohort?.name ?? "Dilly Skills"}
           </Link>
 
           <div className="card overflow-hidden">
@@ -117,6 +118,8 @@ export default async function VideoPage({
               </details>
             )}
           </div>
+
+          <ArticulationPrompt videoId={video.id} isAuthed={Boolean(session)} />
 
           {!session && (
             <AccountNudge

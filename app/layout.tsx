@@ -8,11 +8,11 @@ import { getStreak } from "@/lib/session-state";
 import { t } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Skill Lab by Dilly — a learning library, not a playlist",
+  title: "Dilly Skills by Dilly — a learning library, not a playlist",
   description:
     "A careful, human-curated library of learning videos for 22 fields. Start here. Read the curator's notes. Build real skill, not watch history.",
   openGraph: {
-    title: "Skill Lab by Dilly",
+    title: "Dilly Skills by Dilly",
     description: "A careful, human-curated library of learning videos for 22 fields.",
     type: "website",
   },
@@ -57,7 +57,7 @@ export default async function RootLayout({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               {t(lang, "footer.tagline")}{" "}
-              <a href="https://dilly.app" className="underline decoration-[color:var(--color-accent)]/40 underline-offset-4 hover:text-white">
+              <a href="https://hellodilly.com" className="underline decoration-[color:var(--color-accent)]/40 underline-offset-4 hover:text-white">
                 Dilly
               </a>
               .

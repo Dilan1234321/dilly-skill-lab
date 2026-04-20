@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, sendVerificationCode, verifyCode } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
+import { sharedCookie } from "@/lib/cookie-scope";
 
 async function handleSendCode(formData: FormData) {
   "use server";
@@ -35,13 +36,7 @@ async function handleVerifyCode(formData: FormData) {
     redirect(`/sign-in?step=code&email=${encodeURIComponent(email)}&error=invalid&next=${encodeURIComponent(next)}`);
   }
   const store = await cookies();
-  store.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30,
-  });
+  store.set(SESSION_COOKIE, token, sharedCookie({ httpOnly: true, maxAge: 60 * 60 * 24 * 30 }));
   redirect(next);
 }
 

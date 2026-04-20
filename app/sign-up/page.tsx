@@ -11,9 +11,10 @@ import {
 import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
 import { INDUSTRIES } from "@/lib/industries";
+import { sharedCookie } from "@/lib/cookie-scope";
 
 /**
- * Skill Lab sign-up — the fastest path to a *legitimate* Dilly profile.
+ * Dilly Skills sign-up — the fastest path to a *legitimate* Dilly profile.
  *
  * Three screens, zero resume upload:
  *   1. name + email + user type (.edu enables student path)
@@ -72,17 +73,11 @@ async function handleVerify(formData: FormData) {
     redirect(`/sign-up?step=code&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&t=${ut}&error=invalid&next=${encodeURIComponent(next)}`);
   }
   const store = await cookies();
-  store.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30,
-  });
+  store.set(SESSION_COOKIE, token, sharedCookie({ httpOnly: true, maxAge: 60 * 60 * 24 * 30 }));
 
   // Returning user? Skip the profile form entirely and log them in.
   // A profile with a name on file means they've done onboarding before
-  // (in the mobile app, dashboard, or a previous Skill Lab signup).
+  // (in the mobile app, dashboard, or a previous Dilly Skills signup).
   const profile = await getProfile().catch(() => null);
   const hasName = Boolean(
     (profile?.full_name as string | undefined)?.trim() ||
@@ -156,12 +151,23 @@ export default async function SignUpPage({
   const hint = sp.reason ? reasonCopy[sp.reason] : null;
 
   return (
-    <div className="container-narrow pb-16 pt-14 sm:pt-20">
-      <StepIndicator current={step} />
+    <div className="container-narrow pb-20 pt-10 sm:pt-16">
+      <div className="flex items-center justify-between">
+        <StepIndicator current={step} />
+        {step !== "start" && (
+          <Link
+            href={next}
+            className="text-xs font-semibold uppercase tracking-wider text-[color:var(--color-muted)] transition hover:text-[color:var(--color-accent)]"
+          >
+            Skip for now →
+          </Link>
+        )}
+      </div>
 
       {hint && step === "start" && (
-        <div className="mt-6 rounded-lg border border-[color:var(--color-accent)]/30 bg-[color:var(--color-lavender)] p-3 text-sm text-[color:var(--color-accent)]">
-          {hint}
+        <div className="mt-6 flex items-start gap-3 rounded-xl border border-[color:var(--color-accent)]/30 bg-[color:var(--color-lavender)] p-4 text-sm text-[color:var(--color-accent)]">
+          <span aria-hidden className="text-base">🔒</span>
+          <span>{hint}</span>
         </div>
       )}
 
@@ -170,17 +176,17 @@ export default async function SignUpPage({
       {sp.error === "missing" && <ErrorNote>{t(lang, "auth.err.missing")}</ErrorNote>}
 
       {step === "start" && (
-        <div className="mt-8">
+        <div className="mt-10">
           <div className="eyebrow">Create your Dilly account</div>
-          <h1 className="editorial mt-3 text-4xl leading-[1.05] tracking-tight sm:text-5xl">
+          <h1 className="editorial mt-4 text-[2.5rem] leading-[1.02] tracking-tight sm:text-6xl">
             Free, for everyone. <span className="italic">20 seconds.</span>
           </h1>
-          <p className="mt-4 text-[color:var(--color-muted)] sm:text-lg">
-            One account across Skill Lab and the full Dilly app. We&apos;ll ask three
+          <p className="mt-5 text-base text-[color:var(--color-muted)] sm:text-lg">
+            One account across Dilly Skills and the full Dilly app. Three
             quick things. No passwords, no resume, no spam.
           </p>
 
-          <form action={handleStart} className="mt-8 space-y-5">
+          <form action={handleStart} className="mt-10 space-y-5">
             <input type="hidden" name="next" value={next} />
             <Field
               name="name"
@@ -221,16 +227,18 @@ export default async function SignUpPage({
       )}
 
       {step === "code" && (
-        <div className="mt-8">
+        <div className="mt-10">
           <div className="eyebrow">Step 2 of 3</div>
-          <h1 className="editorial mt-3 text-4xl leading-[1.05] tracking-tight sm:text-5xl">
+          <h1 className="editorial mt-4 text-[2.5rem] leading-[1.02] tracking-tight sm:text-6xl">
             Check your email.
           </h1>
-          <p className="mt-4 text-[color:var(--color-muted)] sm:text-lg">
-            We sent a 6-digit code to <span className="font-semibold text-[color:var(--color-text)]">{emailPrefill}</span>. Expires in a few minutes.
+          <p className="mt-5 text-base text-[color:var(--color-muted)] sm:text-lg">
+            A 6-digit code is on its way to{" "}
+            <span className="font-semibold text-[color:var(--color-text)]">{emailPrefill}</span>.
+            Expires in a few minutes.
           </p>
 
-          <form action={handleVerify} className="mt-8 space-y-5">
+          <form action={handleVerify} className="mt-10 space-y-5">
             <input type="hidden" name="next" value={next} />
             <input type="hidden" name="email" value={emailPrefill} />
             <input type="hidden" name="name" value={namePrefill} />
@@ -258,9 +266,9 @@ export default async function SignUpPage({
       )}
 
       {step === "profile" && (
-        <div className="mt-8">
+        <div className="mt-10">
           <div className="eyebrow">Step 3 of 3</div>
-          <h1 className="editorial mt-3 text-4xl leading-[1.05] tracking-tight sm:text-5xl">
+          <h1 className="editorial mt-4 text-[2.5rem] leading-[1.02] tracking-tight sm:text-6xl">
             One last thing, {namePrefill.split(" ")[0] || "hey"}.
           </h1>
           <p className="mt-4 text-[color:var(--color-muted)] sm:text-lg">
@@ -335,36 +343,52 @@ export default async function SignUpPage({
 // ──────────────────────────────────────────────────────────────────────────
 
 function StepIndicator({ current }: { current: Step }) {
-  const steps: Step[] = ["start", "code", "profile"];
-  const currentIdx = steps.indexOf(current);
+  const steps: { id: Step; label: string }[] = [
+    { id: "start", label: "You" },
+    { id: "code", label: "Verify" },
+    { id: "profile", label: "Profile" },
+  ];
+  const currentIdx = steps.findIndex((s) => s.id === current);
   return (
-    <div className="flex items-center gap-2 text-[0.7rem] uppercase tracking-wider text-[color:var(--color-dim)]">
+    <div className="flex items-center gap-2 sm:gap-3">
       {steps.map((s, i) => {
         const active = i === currentIdx;
         const done = i < currentIdx;
         return (
-          <span key={s} className="flex items-center gap-2">
-            <span
-              className={
-                "inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.65rem] font-bold transition " +
-                (active
-                  ? "bg-[color:var(--color-accent)] text-white"
-                  : done
-                  ? "bg-[color:var(--color-accent)]/20 text-[color:var(--color-accent)]"
-                  : "bg-[color:var(--color-border)] text-[color:var(--color-dim)]")
-              }
-            >
-              {done ? "✓" : i + 1}
-            </span>
+          <div key={s.id} className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2">
+              <span
+                className={
+                  "inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition " +
+                  (active
+                    ? "bg-[color:var(--color-accent)] text-white shadow-[0_0_0_4px_rgba(28,34,100,0.08)]"
+                    : done
+                    ? "bg-[color:var(--color-accent)]/15 text-[color:var(--color-accent)]"
+                    : "bg-[color:var(--color-bg-soft)] text-[color:var(--color-dim)]")
+                }
+              >
+                {done ? "✓" : i + 1}
+              </span>
+              <span
+                className={
+                  "hidden text-xs font-semibold uppercase tracking-wider transition sm:inline " +
+                  (active
+                    ? "text-[color:var(--color-accent)]"
+                    : "text-[color:var(--color-dim)]")
+                }
+              >
+                {s.label}
+              </span>
+            </div>
             {i < steps.length - 1 && (
               <span
                 className={
-                  "h-px w-6 " +
+                  "h-px w-6 transition sm:w-10 " +
                   (done ? "bg-[color:var(--color-accent)]" : "bg-[color:var(--color-border)]")
                 }
               />
             )}
-          </span>
+          </div>
         );
       })}
     </div>

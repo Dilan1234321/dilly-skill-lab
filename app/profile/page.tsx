@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getProfile, getSession } from "@/lib/api";
+import { getProfile, getSession, hasProfilePhoto } from "@/lib/api";
+import { getMyReceipts } from "@/lib/receipts";
 import { PhotoAvatar } from "@/components/photo-avatar";
 import { PhotoUpload } from "@/components/photo-upload";
 import { TaglineEditor } from "@/components/tagline-editor";
+import { LearningTrail } from "@/components/learning-trail";
+import { MasterySignals } from "@/components/mastery-signals";
 
 export const metadata = {
-  title: "Your profile — Skill Lab",
-  description: "The Dilly profile behind your Skill Lab account.",
+  title: "Your profile — Dilly Skills",
+  description: "The Dilly profile behind your Dilly Skills account.",
 };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -36,9 +39,11 @@ function n(p: Record<string, unknown> | null, key: string): number | null {
 // ────────────────────────────────────────────────────────────────────────────
 
 export default async function ProfilePage() {
-  const [session, profile] = await Promise.all([
+  const [session, profile, photoExists, receipts] = await Promise.all([
     getSession().catch(() => null),
     getProfile().catch(() => null),
+    hasProfilePhoto().catch(() => false),
+    getMyReceipts().catch(() => null),
   ]);
   if (!session) redirect("/sign-in?next=/profile");
 
@@ -89,18 +94,19 @@ export default async function ProfilePage() {
     (v, i, a) => v && a.indexOf(v) === i,
   ) as string[];
 
-  const hasPhotoBust = (profile?.photo_updated_at as string | undefined) ?? "1";
+  // Cache-bust the avatar when anything photo-related changes
+  const hasPhotoBust = (profile?.photo_updated_at as string | undefined) ?? String(photoExists);
 
   return (
     <div className="container-app pb-24 pt-10 sm:pt-16">
       {/* ═══ Hero ═══ */}
-      <section className="grid gap-8 md:grid-cols-[auto_1fr] md:gap-10">
+      <section className="grid gap-6 md:grid-cols-[auto_1fr] md:gap-10">
         <div className="relative">
-          <PhotoAvatar name={name} size={160} bust={hasPhotoBust} className="h-40 w-40 sm:h-44 sm:w-44" />
+          <PhotoAvatar name={name} size={160} bust={hasPhotoBust} className="h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44" />
         </div>
         <div className="min-w-0">
           <div className="eyebrow">Your profile</div>
-          <h1 className="editorial mt-2 text-5xl leading-[1.02] tracking-tight sm:text-6xl">
+          <h1 className="editorial mt-2 text-[2rem] leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
             {name}
           </h1>
           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[color:var(--color-muted)]">
@@ -118,12 +124,12 @@ export default async function ProfilePage() {
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {readableSlug && (
               <a
-                href={`https://dilly.app/u/${readableSlug}`}
+                href={`https://hellodilly.com/u/${readableSlug}`}
                 target="_blank"
                 rel="noopener"
                 className="chip hover:text-[color:var(--color-accent)]"
               >
-                dilly.app/u/{readableSlug} ↗
+                hellodilly.com/u/{readableSlug} ↗
               </a>
             )}
             {linkedin && (
@@ -142,9 +148,43 @@ export default async function ProfilePage() {
       </section>
 
       {/* ═══ Photo upload prompt (only when no photo) ═══ */}
-      {!profile?.photo_exists && (
+      {!photoExists && (
         <section className="mt-10">
-          <PhotoUpload hasExisting={Boolean(profile?.photo_exists)} />
+          <PhotoUpload hasExisting={false} />
+        </section>
+      )}
+
+      {/* ═══ Receipts — the evidence trail ═══ */}
+      {receipts && (receipts.total_seconds > 0 || receipts.videos_engaged > 0) && (
+        <section className="mt-16">
+          <div className="flex items-end justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">
+            <div>
+              <div className="eyebrow">Your learning trail</div>
+              <h2 className="editorial mt-1.5 text-2xl tracking-tight sm:text-3xl">
+                Receipts, not claims.
+              </h2>
+              <p className="mt-2 max-w-xl text-sm text-[color:var(--color-muted)]">
+                Every video you engage with, every takeaway you write. This is the
+                evidence behind the skills you&apos;re building.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-4">
+            <Stat label="Invested" value={formatHM(receipts.total_seconds)} />
+            <Stat label="Videos" value={String(receipts.videos_engaged)} />
+            <Stat label="Fields" value={String(receipts.cohorts_touched)} />
+            <Stat label="Takeaways" value={String(receipts.articulations)} />
+          </div>
+
+          <div className="mt-8 card p-5 sm:p-6">
+            <LearningTrail daily={receipts.daily} />
+          </div>
+
+          <div className="mt-6">
+            <div className="eyebrow mb-3">By field</div>
+            <MasterySignals cohorts={receipts.by_cohort} />
+          </div>
         </section>
       )}
 
@@ -152,7 +192,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Story ═══ */}
       {(bio || careerGoal || goals.length > 0 || beyondResume) && (
-        <Section title="Your story" editHref="https://dilly.app/profile">
+        <Section title="Your story" editHref="https://hellodilly.com/profile">
           {bio && <Prose>{bio}</Prose>}
           {careerGoal && (
             <LabeledBlock label="Career goal">{careerGoal}</LabeledBlock>
@@ -178,7 +218,7 @@ export default async function ProfilePage() {
         industryTarget ||
         title ||
         field) && (
-        <Section title="Background" editHref="https://dilly.app/profile">
+        <Section title="Background" editHref="https://hellodilly.com/profile">
           {currentRole && (
             <LabeledBlock label="Current role">{currentRole}</LabeledBlock>
           )}
@@ -214,7 +254,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Skills & interests ═══ */}
       {(interests.length > 0 || selfTaught.length > 0) && (
-        <Section title="Skills & interests" editHref="https://dilly.app/profile">
+        <Section title="Skills & interests" editHref="https://hellodilly.com/profile">
           {selfTaught.length > 0 && (
             <LabeledBlock label="Self-taught skills">
               <ChipList items={selfTaught} />
@@ -230,7 +270,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Cohort lens ═══ */}
       {allCohorts.length > 0 && (
-        <Section title="Cohort lens" editHref="https://dilly.app/profile">
+        <Section title="Cohort lens" editHref="https://hellodilly.com/profile">
           <div className="flex flex-wrap gap-2">
             {allCohorts.map((c) => (
               <Link
@@ -247,7 +287,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Achievements ═══ */}
       {achievements.length > 0 && (
-        <Section title="Achievements" editHref="https://dilly.app/profile">
+        <Section title="Achievements" editHref="https://hellodilly.com/profile">
           <ul className="space-y-2">
             {achievements.map((a, i) => (
               <li
@@ -262,9 +302,11 @@ export default async function ProfilePage() {
       )}
 
       {/* ═══ Footer meta + replace photo ═══ */}
-      <Section title="Photo">
-        <PhotoUpload hasExisting={Boolean(profile?.photo_exists)} />
-      </Section>
+      {photoExists && (
+        <Section title="Photo">
+          <PhotoUpload hasExisting />
+        </Section>
+      )}
     </div>
   );
 }
@@ -343,4 +385,25 @@ function slugifyCohort(name: string): string {
     .replace(/&/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-[color:var(--color-border)] bg-white p-4">
+      <div className="text-[0.65rem] uppercase tracking-wider text-[color:var(--color-dim)]">
+        {label}
+      </div>
+      <div className="editorial mt-1 text-2xl leading-none tracking-tight sm:text-3xl">
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function formatHM(seconds: number): string {
+  const min = Math.round(seconds / 60);
+  if (min < 60) return `${min}m`;
+  const h = Math.floor(min / 60);
+  const rem = min % 60;
+  return rem ? `${h}h ${rem}m` : `${h}h`;
 }

@@ -148,4 +148,24 @@ export async function getProfile(): Promise<Record<string, unknown> | null> {
   return api<Record<string, unknown>>(`/profile`, { auth: true });
 }
 
+/**
+ * Returns true if the signed-in user has a Dilly profile photo on file.
+ * HEAD /profile/photo: 2xx means the file exists, 404 means it doesn't.
+ */
+export async function hasProfilePhoto(): Promise<boolean> {
+  const store = await cookies();
+  const token = store.get(SESSION_COOKIE)?.value;
+  if (!token) return false;
+  try {
+    const res = await fetch(`${API_URL}/profile/photo`, {
+      method: "HEAD",
+      headers: { authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export { SESSION_COOKIE };

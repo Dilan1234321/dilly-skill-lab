@@ -2,7 +2,7 @@ import Link from "next/link";
 import { INDUSTRIES } from "@/lib/industries";
 
 /**
- * Industry picker — Skill Lab's primary "start here" choice for working adults.
+ * Industry picker — Dilly Skills's primary "start here" choice for working adults.
  * Pitch: pick what you do, we'll show you what to learn so AI doesn't take it.
  */
 export function IndustryPicker() {

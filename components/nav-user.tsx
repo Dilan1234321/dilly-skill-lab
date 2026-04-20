@@ -76,15 +76,6 @@ export function NavUser({
           >
             Your library
           </Link>
-          <a
-            href="https://dilly.app"
-            target="_blank"
-            rel="noopener"
-            role="menuitem"
-            className="block px-3 py-2.5 text-sm text-[color:var(--color-muted)] transition hover:bg-[color:var(--color-lavender)] hover:text-[color:var(--color-accent)]"
-          >
-            Open Dilly ↗
-          </a>
           <form action="/api/sign-out" method="post" className="border-t border-[color:var(--color-border)]">
             <button
               type="submit"

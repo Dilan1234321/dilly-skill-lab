@@ -3,7 +3,6 @@ import Image from "next/image";
 import type { SessionUser } from "@/lib/types";
 import type { LangCode } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
-import { LanguagePicker } from "./language-picker";
 import { StreakChip, TimeInvestedChip } from "./live-nav-state";
 import { CommandTrigger } from "./command-palette";
 import { NavUser } from "./nav-user";
@@ -22,7 +21,7 @@ export function Nav({
   return (
     <header className="glass sticky top-0 z-50">
       <div className="container-app flex h-20 items-center gap-3 sm:h-24 sm:gap-5">
-        {/* ── Logo: tight cluster so "Skill Lab" sits snug against the wordmark ── */}
+        {/* ── Logo: tight cluster so "Dilly Skills" sits snug against the wordmark ── */}
         <Link href="/" className="group flex shrink-0 items-center gap-1.5">
           <span className="relative block h-12 w-24 sm:h-14 sm:w-28">
             <Image
@@ -35,7 +34,7 @@ export function Nav({
             />
           </span>
           <span className="editorial hidden text-[1rem] leading-none text-[color:var(--color-text)]/75 group-hover:text-[color:var(--color-accent)] sm:inline">
-            Skill Lab
+            Dilly Skills
           </span>
         </Link>
 
@@ -56,7 +55,6 @@ export function Nav({
           <Link href="/library" className="hidden px-2 py-1 text-sm text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] lg:inline">
             {t(lang, "nav.library")}
           </Link>
-          <LanguagePicker current={lang} label={t(lang, "nav.language")} />
           {session ? (
             <NavUser
               name={displayName || session.email}

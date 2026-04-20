@@ -9,6 +9,7 @@
 // (watched_video_ids, time_invested_today) lives in localStorage.
 
 import { cookies } from "next/headers";
+import { sharedCookie } from "./cookie-scope";
 
 export const STREAK_COOKIE = "skilllab_streak_v1";
 export const LAST_WATCHED_COOKIE = "skilllab_last_watched_v1";
@@ -98,19 +99,11 @@ export async function bumpStreak(): Promise<StreakState> {
       next = { streak: 1, last: today };
     }
   }
-  store.set(STREAK_COOKIE, JSON.stringify(next), {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 400,
-    sameSite: "lax",
-  });
+  store.set(STREAK_COOKIE, JSON.stringify(next), sharedCookie({ maxAge: 60 * 60 * 24 * 400 }));
   return next;
 }
 
 export async function setLastWatched(payload: LastWatched): Promise<void> {
   const store = await cookies();
-  store.set(LAST_WATCHED_COOKIE, JSON.stringify(payload), {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 180,
-    sameSite: "lax",
-  });
+  store.set(LAST_WATCHED_COOKIE, JSON.stringify(payload), sharedCookie({ maxAge: 60 * 60 * 24 * 180 }));
 }

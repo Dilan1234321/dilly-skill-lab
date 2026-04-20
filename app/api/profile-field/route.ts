@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { patchProfile } from "@/lib/api";
 
-// Fields Skill Lab lets users edit in-page. Everything else is "Edit in Dilly".
+// Fields Dilly Skills lets users edit in-page. Everything else is "Edit in Dilly".
 const ALLOWED = new Set(["profile_tagline", "profile_bio"]);
 
 export async function POST(req: Request) {

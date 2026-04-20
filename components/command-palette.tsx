@@ -79,11 +79,14 @@ export function CommandTrigger({ label = "Search" }: { label?: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex w-full max-w-2xl items-center gap-3 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-3 text-sm text-[color:var(--color-muted)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-text)] sm:gap-4 sm:py-3.5"
+        className="flex w-full max-w-2xl items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3 py-2.5 text-sm text-[color:var(--color-muted)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-text)] sm:gap-4 sm:px-4 sm:py-3.5"
         aria-label="Open command palette"
       >
         <SearchIcon />
-        <span className="flex-1 truncate text-left">{label}</span>
+        <span className="flex-1 truncate text-left text-xs sm:text-sm">
+          <span className="sm:hidden">Search</span>
+          <span className="hidden sm:inline">{label}</span>
+        </span>
         <kbd className="hidden items-center gap-0.5 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] px-2 py-0.5 font-mono text-[0.7rem] text-[color:var(--color-dim)] sm:inline-flex">
           ⌘K
         </kbd>
@@ -229,7 +232,7 @@ function CommandModal({ onClose }: { onClose: () => void }) {
             <kbd className="font-mono">↵</kbd> to open ·{" "}
             <kbd className="font-mono">esc</kbd> to close
           </span>
-          <span>Skill Lab</span>
+          <span>Dilly Skills</span>
         </div>
       </div>
     </div>

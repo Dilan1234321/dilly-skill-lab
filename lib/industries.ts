@@ -1,6 +1,6 @@
 // Industries — the primary entry point for working adults. Each industry maps
 // to cohort slugs (where we already have curated videos) AND a list of AI-era
-// skills that matter most for that role. This is Skill Lab's answer to "what
+// skills that matter most for that role. This is Dilly Skills's answer to "what
 // should I learn so I'm not replaced by AI?"
 //
 // The skills list doubles as an editorial syllabus and a set of curation

@@ -50,7 +50,7 @@ export default async function CohortPage({
         <div className="flex flex-col gap-4 border-b border-[color:var(--color-border)] pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="min-w-0">
             <div className="eyebrow">
-              <Link href="/" className="hover:text-[color:var(--color-accent)]">Skill Lab</Link>
+              <Link href="/" className="hover:text-[color:var(--color-accent)]">Dilly Skills</Link>
               <span className="mx-1.5 text-[color:var(--color-dim)]">·</span>
               Cohort
             </div>

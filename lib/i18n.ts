@@ -28,13 +28,13 @@ const T: Translations = {
     "nav.create_account": "Create account",
     "nav.sign_out": "Sign out",
     "nav.language": "Language",
-    "footer.tagline": "Skill Lab is a free product by",
+    "footer.tagline": "Dilly Skills is a free product by",
     "footer.disclaimer": "Videos are embedded from YouTube and remain the property of their creators.",
 
     // Home
     "home.hero.title_a": "The best YouTube videos for your field,",
     "home.hero.title_b": "sorted for you.",
-    "home.hero.subtitle": "Skill Lab is a free library of the highest-signal learning videos across 22 cohorts. No noise, no fluff, no account required. Built by Dilly.",
+    "home.hero.subtitle": "Dilly Skills is a free library of the highest-signal learning videos across 22 cohorts. No noise, no fluff, no account required. Built by Dilly.",
     "home.cta.browse": "Browse by cohort",
     "home.cta.library": "Your library",
     "home.trending.heading": "Trending this week",
@@ -44,7 +44,7 @@ const T: Translations = {
     "home.cohorts.browse_hint": "Browse videos →",
 
     // Cohort page
-    "cohort.breadcrumb": "Skill Lab",
+    "cohort.breadcrumb": "Dilly Skills",
     "cohort.sort.best": "Best",
     "cohort.sort.newest": "Newest",
     "cohort.filter.short": "Under 15 min",
@@ -75,7 +75,7 @@ const T: Translations = {
 
     // Auth
     "auth.signin.title": "Sign in or create an account",
-    "auth.signin.subtitle": "One login works across Skill Lab and the full Dilly app. No password — we email you a code.",
+    "auth.signin.subtitle": "One login works across Dilly Skills and the full Dilly app. No password — we email you a code.",
     "auth.code.title": "Check your email",
     "auth.code.subtitle": "We sent a 6-digit code to {email}. It expires in a few minutes.",
     "auth.field.email": "Email",
@@ -106,12 +106,12 @@ const T: Translations = {
     "nav.create_account": "Crear cuenta",
     "nav.sign_out": "Cerrar sesión",
     "nav.language": "Idioma",
-    "footer.tagline": "Skill Lab es un producto gratuito de",
+    "footer.tagline": "Dilly Skills es un producto gratuito de",
     "footer.disclaimer": "Los videos están incrustados desde YouTube y siguen siendo propiedad de sus creadores.",
 
     "home.hero.title_a": "Los mejores videos de YouTube para tu campo,",
     "home.hero.title_b": "ordenados para ti.",
-    "home.hero.subtitle": "Skill Lab es una biblioteca gratuita de los videos de aprendizaje con mejor señal en 22 cohortes. Sin ruido, sin relleno, sin necesidad de cuenta. Hecho por Dilly.",
+    "home.hero.subtitle": "Dilly Skills es una biblioteca gratuita de los videos de aprendizaje con mejor señal en 22 cohortes. Sin ruido, sin relleno, sin necesidad de cuenta. Hecho por Dilly.",
     "home.cta.browse": "Explorar por cohorte",
     "home.cta.library": "Tu biblioteca",
     "home.trending.heading": "Tendencia esta semana",
@@ -120,7 +120,7 @@ const T: Translations = {
     "home.cohorts.count": "22 campos",
     "home.cohorts.browse_hint": "Ver videos →",
 
-    "cohort.breadcrumb": "Skill Lab",
+    "cohort.breadcrumb": "Dilly Skills",
     "cohort.sort.best": "Mejores",
     "cohort.sort.newest": "Nuevos",
     "cohort.filter.short": "Menos de 15 min",
@@ -148,7 +148,7 @@ const T: Translations = {
     "library.already": "¿Ya tienes cuenta?",
 
     "auth.signin.title": "Iniciar sesión o crear cuenta",
-    "auth.signin.subtitle": "Un solo inicio de sesión funciona en Skill Lab y en la app completa de Dilly. Sin contraseña — te enviamos un código.",
+    "auth.signin.subtitle": "Un solo inicio de sesión funciona en Dilly Skills y en la app completa de Dilly. Sin contraseña — te enviamos un código.",
     "auth.code.title": "Revisa tu correo",
     "auth.code.subtitle": "Enviamos un código de 6 dígitos a {email}. Expira en unos minutos.",
     "auth.field.email": "Correo",
@@ -178,12 +178,12 @@ const T: Translations = {
     "nav.create_account": "Criar conta",
     "nav.sign_out": "Sair",
     "nav.language": "Idioma",
-    "footer.tagline": "Skill Lab é um produto gratuito da",
+    "footer.tagline": "Dilly Skills é um produto gratuito da",
     "footer.disclaimer": "Os vídeos são incorporados do YouTube e permanecem propriedade de seus criadores.",
 
     "home.hero.title_a": "Os melhores vídeos do YouTube para sua área,",
     "home.hero.title_b": "organizados para você.",
-    "home.hero.subtitle": "Skill Lab é uma biblioteca gratuita dos vídeos de aprendizado de maior sinal em 22 coortes. Sem ruído, sem enrolação, sem precisar de conta. Feito pela Dilly.",
+    "home.hero.subtitle": "Dilly Skills é uma biblioteca gratuita dos vídeos de aprendizado de maior sinal em 22 coortes. Sem ruído, sem enrolação, sem precisar de conta. Feito pela Dilly.",
     "home.cta.browse": "Explorar por coorte",
     "home.cta.library": "Sua biblioteca",
     "home.trending.heading": "Em alta esta semana",
@@ -192,7 +192,7 @@ const T: Translations = {
     "home.cohorts.count": "22 áreas",
     "home.cohorts.browse_hint": "Ver vídeos →",
 
-    "cohort.breadcrumb": "Skill Lab",
+    "cohort.breadcrumb": "Dilly Skills",
     "cohort.sort.best": "Melhores",
     "cohort.sort.newest": "Mais novos",
     "cohort.filter.short": "Até 15 min",
@@ -220,7 +220,7 @@ const T: Translations = {
     "library.already": "Já tem uma conta?",
 
     "auth.signin.title": "Entrar ou criar conta",
-    "auth.signin.subtitle": "Um único login funciona no Skill Lab e no app Dilly completo. Sem senha — enviamos um código por e-mail.",
+    "auth.signin.subtitle": "Um único login funciona no Dilly Skills e no app Dilly completo. Sem senha — enviamos um código por e-mail.",
     "auth.code.title": "Cheque seu e-mail",
     "auth.code.subtitle": "Enviamos um código de 6 dígitos para {email}. Expira em alguns minutos.",
     "auth.field.email": "E-mail",
@@ -250,12 +250,12 @@ const T: Translations = {
     "nav.create_account": "खाता बनाएँ",
     "nav.sign_out": "साइन आउट",
     "nav.language": "भाषा",
-    "footer.tagline": "Skill Lab, Dilly द्वारा एक मुफ़्त उत्पाद है",
+    "footer.tagline": "Dilly Skills, Dilly द्वारा एक मुफ़्त उत्पाद है",
     "footer.disclaimer": "वीडियो YouTube से एम्बेड हैं और उनके निर्माताओं की संपत्ति हैं।",
 
     "home.hero.title_a": "आपके क्षेत्र के लिए सर्वश्रेष्ठ YouTube वीडियो,",
     "home.hero.title_b": "आपके लिए क्रमबद्ध।",
-    "home.hero.subtitle": "Skill Lab 22 कोहर्ट्स में उच्चतम-सिग्नल लर्निंग वीडियो की मुफ़्त लाइब्रेरी है। कोई शोर नहीं, कोई फ़िलर नहीं, खाते की ज़रूरत नहीं। Dilly द्वारा निर्मित।",
+    "home.hero.subtitle": "Dilly Skills 22 कोहर्ट्स में उच्चतम-सिग्नल लर्निंग वीडियो की मुफ़्त लाइब्रेरी है। कोई शोर नहीं, कोई फ़िलर नहीं, खाते की ज़रूरत नहीं। Dilly द्वारा निर्मित।",
     "home.cta.browse": "कोहर्ट से ब्राउज़ करें",
     "home.cta.library": "आपकी लाइब्रेरी",
     "home.trending.heading": "इस सप्ताह ट्रेंडिंग",
@@ -264,7 +264,7 @@ const T: Translations = {
     "home.cohorts.count": "22 क्षेत्र",
     "home.cohorts.browse_hint": "वीडियो देखें →",
 
-    "cohort.breadcrumb": "Skill Lab",
+    "cohort.breadcrumb": "Dilly Skills",
     "cohort.sort.best": "सर्वश्रेष्ठ",
     "cohort.sort.newest": "नवीनतम",
     "cohort.filter.short": "15 मिनट से कम",
@@ -292,7 +292,7 @@ const T: Translations = {
     "library.already": "पहले से खाता है?",
 
     "auth.signin.title": "साइन इन या खाता बनाएँ",
-    "auth.signin.subtitle": "एक ही लॉगिन Skill Lab और पूरे Dilly ऐप पर काम करता है। कोई पासवर्ड नहीं — हम कोड ईमेल करते हैं।",
+    "auth.signin.subtitle": "एक ही लॉगिन Dilly Skills और पूरे Dilly ऐप पर काम करता है। कोई पासवर्ड नहीं — हम कोड ईमेल करते हैं।",
     "auth.code.title": "अपना ईमेल देखें",
     "auth.code.subtitle": "हमने {email} पर 6 अंकों का कोड भेजा। कुछ ही मिनट में समाप्त होगा।",
     "auth.field.email": "ईमेल",
@@ -322,12 +322,12 @@ const T: Translations = {
     "nav.create_account": "Créer un compte",
     "nav.sign_out": "Se déconnecter",
     "nav.language": "Langue",
-    "footer.tagline": "Skill Lab est un produit gratuit de",
+    "footer.tagline": "Dilly Skills est un produit gratuit de",
     "footer.disclaimer": "Les vidéos sont intégrées depuis YouTube et restent la propriété de leurs créateurs.",
 
     "home.hero.title_a": "Les meilleures vidéos YouTube pour votre domaine,",
     "home.hero.title_b": "triées pour vous.",
-    "home.hero.subtitle": "Skill Lab est une bibliothèque gratuite des vidéos d'apprentissage à plus haut signal dans 22 cohortes. Sans bruit, sans remplissage, sans compte requis. Fait par Dilly.",
+    "home.hero.subtitle": "Dilly Skills est une bibliothèque gratuite des vidéos d'apprentissage à plus haut signal dans 22 cohortes. Sans bruit, sans remplissage, sans compte requis. Fait par Dilly.",
     "home.cta.browse": "Parcourir par cohorte",
     "home.cta.library": "Votre bibliothèque",
     "home.trending.heading": "Tendances cette semaine",
@@ -336,7 +336,7 @@ const T: Translations = {
     "home.cohorts.count": "22 domaines",
     "home.cohorts.browse_hint": "Voir les vidéos →",
 
-    "cohort.breadcrumb": "Skill Lab",
+    "cohort.breadcrumb": "Dilly Skills",
     "cohort.sort.best": "Meilleures",
     "cohort.sort.newest": "Plus récentes",
     "cohort.filter.short": "Moins de 15 min",
@@ -364,7 +364,7 @@ const T: Translations = {
     "library.already": "Déjà un compte ?",
 
     "auth.signin.title": "Se connecter ou créer un compte",
-    "auth.signin.subtitle": "Un seul login fonctionne pour Skill Lab et l'app Dilly complète. Pas de mot de passe — nous envoyons un code par e-mail.",
+    "auth.signin.subtitle": "Un seul login fonctionne pour Dilly Skills et l'app Dilly complète. Pas de mot de passe — nous envoyons un code par e-mail.",
     "auth.code.title": "Vérifiez votre e-mail",
     "auth.code.subtitle": "Nous avons envoyé un code à 6 chiffres à {email}. Il expire dans quelques minutes.",
     "auth.field.email": "E-mail",
@@ -394,12 +394,12 @@ const T: Translations = {
     "nav.create_account": "创建账户",
     "nav.sign_out": "退出登录",
     "nav.language": "语言",
-    "footer.tagline": "Skill Lab 是 Dilly 的免费产品",
+    "footer.tagline": "Dilly Skills 是 Dilly 的免费产品",
     "footer.disclaimer": "视频嵌入自 YouTube，版权归其创作者所有。",
 
     "home.hero.title_a": "为你的领域精选的最佳 YouTube 视频，",
     "home.hero.title_b": "已为你排序。",
-    "home.hero.subtitle": "Skill Lab 是一个免费的学习视频库，涵盖 22 个学科。无杂音、无注水、无需账户。由 Dilly 打造。",
+    "home.hero.subtitle": "Dilly Skills 是一个免费的学习视频库，涵盖 22 个学科。无杂音、无注水、无需账户。由 Dilly 打造。",
     "home.cta.browse": "按学科浏览",
     "home.cta.library": "你的收藏库",
     "home.trending.heading": "本周热门",
@@ -408,7 +408,7 @@ const T: Translations = {
     "home.cohorts.count": "22 个领域",
     "home.cohorts.browse_hint": "浏览视频 →",
 
-    "cohort.breadcrumb": "Skill Lab",
+    "cohort.breadcrumb": "Dilly Skills",
     "cohort.sort.best": "精选",
     "cohort.sort.newest": "最新",
     "cohort.filter.short": "15 分钟内",
@@ -436,7 +436,7 @@ const T: Translations = {
     "library.already": "已有账户？",
 
     "auth.signin.title": "登录或创建账户",
-    "auth.signin.subtitle": "一次登录，Skill Lab 和完整 Dilly 应用通用。无需密码 — 我们通过邮件发送验证码。",
+    "auth.signin.subtitle": "一次登录，Dilly Skills 和完整 Dilly 应用通用。无需密码 — 我们通过邮件发送验证码。",
     "auth.code.title": "查看你的邮件",
     "auth.code.subtitle": "我们已向 {email} 发送 6 位验证码。几分钟内有效。",
     "auth.field.email": "邮箱",

@@ -4,8 +4,8 @@ import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
 
 export const metadata = {
-  title: "Browse — Skill Lab",
-  description: "Every field and role in Skill Lab.",
+  title: "Browse — Dilly Skills",
+  description: "Every field and role in Dilly Skills.",
 };
 
 export default async function BrowsePage() {

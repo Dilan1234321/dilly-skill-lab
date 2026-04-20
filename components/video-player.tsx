@@ -145,13 +145,29 @@ export function VideoPlayer({
       }, 5_000);
 
       // Watch-time counter: 15s ticks while the tab is visible.
+      let sinceLastReceipt = 0;
       timeInterval = window.setInterval(() => {
         if (document.visibilityState !== "visible") return;
         addTimeToday(15);
         elapsed += 15;
+        sinceLastReceipt += 15;
         if (!markedWatched && elapsed >= 30) {
           markWatched(videoId, elapsed);
           markedWatched = true;
+        }
+        // Flush a receipt beacon every 60s of engaged time. Fire-and-forget —
+        // failures are silent (network blips shouldn't break watching).
+        if (sinceLastReceipt >= 60) {
+          fetch("/api/receipts", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              video_id: videoId,
+              seconds_engaged: sinceLastReceipt,
+            }),
+            keepalive: true,
+          }).catch(() => null);
+          sinceLastReceipt = 0;
         }
       }, 15_000);
     })();
