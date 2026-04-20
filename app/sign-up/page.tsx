@@ -12,6 +12,7 @@ import { getLang } from "@/lib/lang-server";
 import { t } from "@/lib/i18n";
 import { INDUSTRIES } from "@/lib/industries";
 import { sharedCookie } from "@/lib/cookie-scope";
+import { SignupStartForm } from "@/components/signup-start-form";
 
 /**
  * Dilly Skills sign-up — the fastest path to a *legitimate* Dilly profile.
@@ -40,6 +41,20 @@ async function handleStart(formData: FormData) {
   const next = String(formData.get("next") ?? "/");
   if (!name || !email) {
     redirect(`/sign-up?error=missing&next=${encodeURIComponent(next)}`);
+  }
+
+  // Server-side guardrail: students must sign up with a .edu address.
+  // The client blocks this too, but we enforce here for non-JS and
+  // malformed submissions.
+  if (userType === "student" && !/\.edu\s*$/.test(email)) {
+    const q = new URLSearchParams({
+      error: "edu_required",
+      next,
+      name,
+      email,
+      t: "s",
+    });
+    redirect(`/sign-up?${q.toString()}`);
   }
 
   const res = await sendVerificationCode(email, userType);
@@ -174,6 +189,11 @@ export default async function SignUpPage({
       {sp.error === "send" && <ErrorNote>{t(lang, "auth.err.send")}</ErrorNote>}
       {sp.error === "invalid" && <ErrorNote>{t(lang, "auth.err.invalid")}</ErrorNote>}
       {sp.error === "missing" && <ErrorNote>{t(lang, "auth.err.missing")}</ErrorNote>}
+      {sp.error === "edu_required" && (
+        <ErrorNote>
+          <strong>.edu required.</strong> Students sign up with their school email.
+        </ErrorNote>
+      )}
 
       {step === "start" && (
         <div className="mt-10">
@@ -186,43 +206,22 @@ export default async function SignUpPage({
             quick things. No passwords, no resume, no spam.
           </p>
 
-          <form action={handleStart} className="mt-10 space-y-5">
-            <input type="hidden" name="next" value={next} />
-            <Field
-              name="name"
-              type="text"
-              label="Your name"
-              placeholder="Alex Kim"
-              autoComplete="name"
-              defaultValue={namePrefill}
-              required
-            />
-            <Field
-              name="email"
-              type="email"
-              label="Email"
-              placeholder="you@school.edu"
-              autoComplete="email"
-              defaultValue={emailPrefill}
-              required
-            />
-            <fieldset className="card p-4">
-              <legend className="eyebrow px-1">I&apos;m a…</legend>
-              <div className="mt-2 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
-                <RadioTile name="user_type" value="student" defaultChecked={ut === "s"} label="College student" sub=".edu email required" />
-                <RadioTile name="user_type" value="general" defaultChecked={ut !== "s"} label="Anyone else" sub="Any email" />
-              </div>
-            </fieldset>
-            <button type="submit" className="btn btn-primary w-full py-3.5">
-              Continue →
-            </button>
-            <p className="text-center text-xs text-[color:var(--color-dim)]">
-              Already have a Dilly account?{" "}
-              <Link href={`/sign-in?next=${encodeURIComponent(next)}`} className="underline hover:text-[color:var(--color-accent)]">
-                Sign in
-              </Link>
-            </p>
-          </form>
+          <SignupStartForm
+            action={handleStart}
+            next={next}
+            defaultName={namePrefill}
+            defaultEmail={emailPrefill}
+            defaultUserType={ut === "s" ? "student" : "general"}
+          />
+          <p className="mt-6 text-center text-xs text-[color:var(--color-dim)]">
+            Already have a Dilly account?{" "}
+            <Link
+              href={`/sign-in?next=${encodeURIComponent(next)}`}
+              className="underline hover:text-[color:var(--color-accent)]"
+            >
+              Sign in
+            </Link>
+          </p>
         </div>
       )}
 

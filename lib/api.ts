@@ -150,7 +150,11 @@ export async function getProfile(): Promise<Record<string, unknown> | null> {
 
 /**
  * Returns true if the signed-in user has a Dilly profile photo on file.
- * HEAD /profile/photo: 2xx means the file exists, 404 means it doesn't.
+ * GET /profile/photo returns 2xx when a photo exists, 404 when not.
+ *
+ * FastAPI's @router.get doesn't auto-expose HEAD, so we do a GET with a
+ * Range header that asks for a single byte — keeps the payload tiny while
+ * still getting a definitive status.
  */
 export async function hasProfilePhoto(): Promise<boolean> {
   const store = await cookies();
@@ -158,11 +162,15 @@ export async function hasProfilePhoto(): Promise<boolean> {
   if (!token) return false;
   try {
     const res = await fetch(`${API_URL}/profile/photo`, {
-      method: "HEAD",
-      headers: { authorization: `Bearer ${token}` },
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+        range: "bytes=0-0",
+      },
       cache: "no-store",
     });
-    return res.ok;
+    // 200 OK or 206 Partial Content both mean the photo exists
+    return res.ok || res.status === 206;
   } catch {
     return false;
   }

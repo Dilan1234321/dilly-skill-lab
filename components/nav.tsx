@@ -33,8 +33,8 @@ export function Nav({
               sizes="(min-width: 640px) 112px, 96px"
             />
           </span>
-          <span className="editorial hidden text-[1rem] leading-none text-[color:var(--color-text)]/75 group-hover:text-[color:var(--color-accent)] sm:inline">
-            Dilly Skills
+          <span className="editorial text-[1rem] leading-none text-[color:var(--color-text)] group-hover:text-[color:var(--color-accent)]">
+            Skills
           </span>
         </Link>
 
@@ -62,9 +62,17 @@ export function Nav({
               signOutLabel={t(lang, "nav.sign_out")}
             />
           ) : (
-            <Link href="/sign-up" className="btn btn-primary">
-              {t(lang, "nav.create_account")}
-            </Link>
+            <>
+              <Link
+                href="/sign-in"
+                className="hidden px-3 py-2 text-sm font-semibold text-[color:var(--color-text)] transition hover:text-[color:var(--color-accent)] sm:inline-flex"
+              >
+                {t(lang, "nav.sign_in")}
+              </Link>
+              <Link href="/sign-up" className="btn btn-primary">
+                {t(lang, "nav.create_account")}
+              </Link>
+            </>
           )}
         </div>
       </div>

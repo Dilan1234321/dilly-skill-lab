@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getProfile, getSession, hasProfilePhoto } from "@/lib/api";
 import { getMyReceipts } from "@/lib/receipts";
+import { schoolName } from "@/lib/schools";
 import { PhotoAvatar } from "@/components/photo-avatar";
 import { PhotoUpload } from "@/components/photo-upload";
 import { TaglineEditor } from "@/components/tagline-editor";
@@ -56,14 +57,33 @@ export default async function ProfilePage() {
 
   const tagline = s(profile, "profile_tagline") ?? "";
   const bio = s(profile, "profile_bio");
-  const school = s(profile, "school") || s(profile, "school_id");
+  const school = schoolName(s(profile, "school") || s(profile, "school_id"));
   const pronouns = s(profile, "pronouns");
   const linkedin = s(profile, "linkedin_url");
   const readableSlug = s(profile, "readable_slug");
 
+  // The public profile URL depends on user_type. Students live at /s/{slug},
+  // everyone else at /p/{slug}. Matches projects/dilly/website/src/app/*.
+  const userType = s(profile, "user_type") || "";
+  const publicProfileUrl = readableSlug
+    ? `https://hellodilly.com/${userType === "student" ? "s" : "p"}/${readableSlug}`
+    : null;
+  const publicProfileLabel = readableSlug
+    ? `hellodilly.com/${userType === "student" ? "s" : "p"}/${readableSlug}`
+    : null;
+
   const majors = arr(profile, "majors");
   const major = s(profile, "major");
-  const allMajors = [major, ...majors].filter(Boolean) as string[];
+  // Dedupe case-insensitively — 'major' is often duplicated in 'majors[0]'
+  const seenMajors = new Set<string>();
+  const allMajors = [major, ...majors]
+    .filter((m): m is string => typeof m === "string" && m.trim().length > 0)
+    .filter((m) => {
+      const k = m.trim().toLowerCase();
+      if (seenMajors.has(k)) return false;
+      seenMajors.add(k);
+      return true;
+    });
   const minors = arr(profile, "minors");
 
   const gradYear = n(profile, "graduation_year");
@@ -122,14 +142,14 @@ export default async function ProfilePage() {
             <TaglineEditor initial={tagline} />
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            {readableSlug && (
+            {publicProfileUrl && publicProfileLabel && (
               <a
-                href={`https://hellodilly.com/u/${readableSlug}`}
+                href={publicProfileUrl}
                 target="_blank"
                 rel="noopener"
                 className="chip hover:text-[color:var(--color-accent)]"
               >
-                hellodilly.com/u/{readableSlug} ↗
+                {publicProfileLabel} ↗
               </a>
             )}
             {linkedin && (
@@ -192,7 +212,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Story ═══ */}
       {(bio || careerGoal || goals.length > 0 || beyondResume) && (
-        <Section title="Your story" editHref="https://hellodilly.com/profile">
+        <Section title="Your story">
           {bio && <Prose>{bio}</Prose>}
           {careerGoal && (
             <LabeledBlock label="Career goal">{careerGoal}</LabeledBlock>
@@ -218,7 +238,7 @@ export default async function ProfilePage() {
         industryTarget ||
         title ||
         field) && (
-        <Section title="Background" editHref="https://hellodilly.com/profile">
+        <Section title="Background">
           {currentRole && (
             <LabeledBlock label="Current role">{currentRole}</LabeledBlock>
           )}
@@ -254,7 +274,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Skills & interests ═══ */}
       {(interests.length > 0 || selfTaught.length > 0) && (
-        <Section title="Skills & interests" editHref="https://hellodilly.com/profile">
+        <Section title="Skills & interests">
           {selfTaught.length > 0 && (
             <LabeledBlock label="Self-taught skills">
               <ChipList items={selfTaught} />
@@ -270,7 +290,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Cohort lens ═══ */}
       {allCohorts.length > 0 && (
-        <Section title="Cohort lens" editHref="https://hellodilly.com/profile">
+        <Section title="Cohort lens">
           <div className="flex flex-wrap gap-2">
             {allCohorts.map((c) => (
               <Link
@@ -287,7 +307,7 @@ export default async function ProfilePage() {
 
       {/* ═══ Achievements ═══ */}
       {achievements.length > 0 && (
-        <Section title="Achievements" editHref="https://hellodilly.com/profile">
+        <Section title="Achievements">
           <ul className="space-y-2">
             {achievements.map((a, i) => (
               <li
