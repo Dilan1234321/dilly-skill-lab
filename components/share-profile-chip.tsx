@@ -17,11 +17,10 @@ export function ShareProfileChip({
   const [copied, setCopied] = useState(false);
 
   async function onClick() {
-    const origin =
-      typeof window !== "undefined"
-        ? window.location.origin
-        : "https://skills.hellodilly.com";
-    const url = `${origin}/${prefix}/${slug}`;
+    // Hardcoded canonical host. window.location.origin would work on prod
+    // but would leak a preview URL (e.g. pr-123.vercel.app) on preview
+    // deploys, which is exactly the stale-URL class of bug we're closing.
+    const url = `https://skills.hellodilly.com/${prefix}/${slug}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);

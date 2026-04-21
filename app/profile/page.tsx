@@ -71,10 +71,10 @@ export default async function ProfilePage() {
   // only "general" and "professional" fall on the /p prefix.
   const userType = (s(profile, "user_type") ?? "student").toLowerCase();
   const profilePrefix = ["general", "professional"].includes(userType) ? "p" : "s";
-  const siteBase =
-    (process.env.NEXT_PUBLIC_SITE_URL ?? "https://skills.hellodilly.com")
-      .replace(/^https?:\/\//, "")
-      .replace(/\/$/, "");
+  // Canonical production host. Hardcoded so a stale NEXT_PUBLIC_SITE_URL
+  // env var on Vercel can't leak the old vercel.app preview URL into the
+  // shareable profile link the user sees on this page.
+  const siteBase = "skills.hellodilly.com";
   const publicProfileUrl = readableSlug ? `/${profilePrefix}/${readableSlug}` : null;
   const publicProfileLabel = readableSlug
     ? `${siteBase}/${profilePrefix}/${readableSlug}`
