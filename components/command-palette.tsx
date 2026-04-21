@@ -109,19 +109,32 @@ type Row =
 // ── Trigger button in the nav ─────────────────────────────────────────────
 
 export function CommandTrigger({ label = "Search" }: { label?: string }) {
-  const [open, setOpen] = useState(false);
+  // Mount separate from visible state so the exit animation can play.
+  const [mounted, setMounted] = useState(false);
+  const [state, setState] = useState<"open" | "closed">("closed");
+
+  function open() {
+    setMounted(true);
+    // Next frame: the CSS enter animation runs.
+    requestAnimationFrame(() => setState("open"));
+  }
+  function close() {
+    setState("closed");
+    // Unmount after the exit animation finishes (match the ~200ms card-out).
+    window.setTimeout(() => setMounted(false), 200);
+  }
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const k = e.key.toLowerCase();
       if ((e.metaKey || e.ctrlKey) && k === "k") {
         e.preventDefault();
-        setOpen(true);
+        open();
         return;
       }
       if (k === "/" && !isTypingTarget(e.target)) {
         e.preventDefault();
-        setOpen(true);
+        open();
       }
     }
     window.addEventListener("keydown", onKey);
@@ -132,7 +145,7 @@ export function CommandTrigger({ label = "Search" }: { label?: string }) {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={open}
         className="flex w-full max-w-2xl items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3 py-2.5 text-sm text-[color:var(--color-muted)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-text)] sm:gap-4 sm:px-4 sm:py-3.5"
         aria-label="Open command palette"
       >
@@ -145,14 +158,20 @@ export function CommandTrigger({ label = "Search" }: { label?: string }) {
           ⌘K
         </kbd>
       </button>
-      {open && <CommandModal onClose={() => setOpen(false)} />}
+      {mounted && <CommandModal state={state} onClose={close} />}
     </>
   );
 }
 
 // ── The modal ─────────────────────────────────────────────────────────────
 
-function CommandModal({ onClose }: { onClose: () => void }) {
+function CommandModal({
+  state,
+  onClose,
+}: {
+  state: "open" | "closed";
+  onClose: () => void;
+}) {
   const router = useRouter();
   const [q, setQ] = useState("");
   const [cursor, setCursor] = useState(0);
@@ -278,7 +297,8 @@ function CommandModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[8vh] sm:pt-[12vh]"
+      className="palette-overlay fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[8vh] sm:pt-[12vh]"
+      data-state={state}
       role="dialog"
       aria-modal="true"
       onClick={onClose}
@@ -288,7 +308,8 @@ function CommandModal({ onClose }: { onClose: () => void }) {
         aria-hidden="true"
       />
       <div
-        className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-[color:var(--color-border-strong)] bg-white shadow-[0_30px_80px_-20px_rgba(28,34,100,0.35)]"
+        className="palette-card relative w-full max-w-2xl overflow-hidden rounded-2xl border border-[color:var(--color-border-strong)] bg-white shadow-[0_30px_80px_-20px_rgba(28,34,100,0.35)]"
+        data-state={state}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-[color:var(--color-border)] px-5 py-4">
@@ -300,6 +321,11 @@ function CommandModal({ onClose }: { onClose: () => void }) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search videos, roles, fields — or ask anything."
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            name="skills-search"
             className="flex-1 bg-transparent text-[1rem] text-[color:var(--color-text)] outline-none placeholder:text-[color:var(--color-dim)]"
           />
           {loadingVideos && (

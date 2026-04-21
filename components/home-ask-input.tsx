@@ -47,6 +47,10 @@ export function HomeAskInput() {
         placeholder="What do you want to learn? — anything goes."
         aria-label="Ask Dilly Skills"
         autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
+        name="skills-home-ask"
         className="flex-1 bg-transparent text-base text-[color:var(--color-text)] placeholder:italic placeholder:text-[color:var(--color-muted)] focus:outline-none sm:text-lg"
       />
       <button
