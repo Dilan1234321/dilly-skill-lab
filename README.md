@@ -2,7 +2,7 @@
 
 A living learning library. Free forever. No account required to browse. Curated YouTube videos across 22 academic fields and 16 professional roles, ranked for signal and filtered for topical fit.
 
-Live: https://dilly-skill-lab.vercel.app
+Live: https://skills.hellodilly.com
 
 ## What it is
 
@@ -48,7 +48,7 @@ scripts/
 See `.env.example`. On Vercel, set:
 
 - `DILLY_API_URL` — `https://api.trydilly.com`
-- `NEXT_PUBLIC_SITE_URL` — `https://dilly-skill-lab.vercel.app`
+- `NEXT_PUBLIC_SITE_URL` — `https://skills.hellodilly.com`
 
 ## Ingest
 

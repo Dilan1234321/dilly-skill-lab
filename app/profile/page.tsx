@@ -68,7 +68,7 @@ export default async function ProfilePage() {
   // recruiter-facing profile (hellodilly.com/s/... or /p/...) is a different
   // product and we don't link to it from Skill Lab until that's launched.
   const siteBase =
-    (process.env.NEXT_PUBLIC_SITE_URL ?? "https://dilly-skill-lab.vercel.app")
+    (process.env.NEXT_PUBLIC_SITE_URL ?? "https://skills.hellodilly.com")
       .replace(/^https?:\/\//, "")
       .replace(/\/$/, "");
   const publicProfileUrl = readableSlug ? `/u/${readableSlug}` : null;

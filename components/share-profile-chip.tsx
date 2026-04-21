@@ -13,7 +13,7 @@ export function ShareProfileChip({ slug }: { slug: string }) {
     const origin =
       typeof window !== "undefined"
         ? window.location.origin
-        : "https://dilly-skill-lab.vercel.app";
+        : "https://skills.hellodilly.com";
     const url = `${origin}/u/${slug}`;
     try {
       await navigator.clipboard.writeText(url);
