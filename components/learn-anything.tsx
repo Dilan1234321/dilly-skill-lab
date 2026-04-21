@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HomeAskInput } from "./home-ask-input";
 
 /**
  * "Learn anything" — the universal, anyone-can-learn block that replaces
@@ -28,26 +29,9 @@ export function LearnAnything({ populatedNames }: { populatedNames: string[] }) 
         </p>
       </div>
 
-      {/* ── The single input: Ask ─────────────────────────── */}
+      {/* ── The single input: Ask — real input, Enter submits ─────── */}
       <div className="mx-auto mt-10 max-w-3xl">
-        <Link
-          href="/ask"
-          className="group relative flex items-center gap-3 rounded-full border border-[color:var(--color-border-strong)] bg-white px-5 py-4 text-base text-[color:var(--color-muted)] shadow-[0_2px_0_rgba(28,34,100,0.04)] transition hover:border-[color:var(--color-accent)] hover:shadow-[0_8px_32px_-16px_rgba(28,34,100,0.25)] sm:px-6 sm:py-5 sm:text-lg"
-        >
-          <span aria-hidden className="flex-shrink-0 text-[color:var(--color-accent)]">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="7" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </span>
-          <span className="flex-1 truncate">
-            What do you want to learn? —{" "}
-            <span className="italic">anything goes.</span>
-          </span>
-          <span className="flex-shrink-0 rounded-full bg-[color:var(--color-accent)] px-3 py-1.5 text-xs font-bold text-white transition group-hover:px-4">
-            Ask →
-          </span>
-        </Link>
+        <HomeAskInput />
       </div>
 
       {/* ── Quick prompts — shows range, sparks ideas ─────── */}
