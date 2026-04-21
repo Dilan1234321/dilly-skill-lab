@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getPublicProfile } from "@/lib/api";
+import { getPublicProfile, getProfile } from "@/lib/api";
 import { schoolName } from "@/lib/schools";
 import { COHORTS_BY_NAME } from "@/lib/cohorts";
 import { cohortHex, hexWithAlpha } from "@/lib/cohort-colors";
@@ -19,6 +19,22 @@ export default async function PublicProfilePage({
   const { slug } = await params;
   const profile = await getPublicProfile(slug).catch(() => null);
   if (!profile) notFound();
+
+  // Is the current viewer the owner of this profile? Used to switch the
+  // empty-state copy between "you haven't started" and "this person
+  // hasn't started". Unauthed visitors get the stranger-facing copy.
+  const viewer = await getProfile().catch(() => null);
+  const viewerSlug = (viewer?.readable_slug as string | undefined)?.trim().toLowerCase() ?? null;
+  const isOwner = viewerSlug !== null && viewerSlug === slug.trim().toLowerCase();
+
+  // A profile is "empty" when the owner exists in Dilly but has no Skill
+  // Lab engagement yet — no videos watched, no receipts, no cohorts
+  // touched. Common for people who made their Dilly account in the mobile
+  // app and haven't used Skill Lab yet.
+  const isEmpty =
+    profile.videos_engaged === 0 &&
+    profile.articulations === 0 &&
+    profile.by_cohort.length === 0;
 
   const schoolLabel = schoolName(profile.school);
   const hoursLabel = formatHours(profile.total_seconds);
@@ -97,13 +113,17 @@ export default async function PublicProfilePage({
               )}
             </div>
 
-            {/* Hero stats block */}
-            <div className="grid grid-cols-2 gap-3 sm:min-w-[360px]">
-              <HeroStat label="Invested" value={hoursLabel} />
-              <HeroStat label="Videos" value={String(profile.videos_engaged)} />
-              <HeroStat label="Fields" value={String(profile.cohorts_touched)} />
-              <HeroStat label="Receipts" value={String(profile.articulations)} />
-            </div>
+            {/* Hero stats — suppressed on an empty profile so it doesn't read
+                as a row of dead zeros. The empty-state panel below replaces
+                it with an action-oriented card instead. */}
+            {!isEmpty && (
+              <div className="grid grid-cols-2 gap-3 sm:min-w-[360px]">
+                <HeroStat label="Invested" value={hoursLabel} />
+                <HeroStat label="Videos" value={String(profile.videos_engaged)} />
+                <HeroStat label="Fields" value={String(profile.cohorts_touched)} />
+                <HeroStat label="Receipts" value={String(profile.articulations)} />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -159,7 +179,9 @@ export default async function PublicProfilePage({
           </section>
         )}
 
-      {profile.by_cohort.length > 0 ? (
+      {isEmpty ? (
+        <EmptyProfileState firstName={profile.first_name} isOwner={isOwner} />
+      ) : (
         <>
           <div className="container-app">
             <div className="rule" />
@@ -201,41 +223,140 @@ export default async function PublicProfilePage({
               })}
             </ul>
           </section>
-        </>
-      ) : (
-        <section className="container-app py-16 text-center text-[color:var(--color-muted)]">
-          <div className="editorial text-xl">
-            {profile.first_name} is just getting started.
-          </div>
-          <div className="mt-2 text-sm">
-            Skills in motion will show up here as engagement builds.
-          </div>
-        </section>
-      )}
 
-      {/* ── Footer pitch for viewers to join ─────────────────────────── */}
-      <section className="container-app pb-20 pt-6">
-        <div className="card flex flex-col items-center gap-3 px-6 py-10 text-center sm:px-10">
-          <div className="eyebrow">Build your own</div>
-          <h3 className="editorial text-2xl tracking-tight sm:text-3xl">
-            Your learning, on the record.
-          </h3>
-          <p className="max-w-lg text-sm text-[color:var(--color-muted)]">
-            Dilly Skills is a free library of the best learning videos on the
-            internet. Start watching. Write a receipt. Share a profile like
-            this of your own.
+          {/* ── Footer pitch for viewers to join ─────────────────────── */}
+          <section className="container-app pb-20 pt-6">
+            <div className="card flex flex-col items-center gap-3 px-6 py-10 text-center sm:px-10">
+              <div className="eyebrow">Build your own</div>
+              <h3 className="editorial text-2xl tracking-tight sm:text-3xl">
+                Your learning, on the record.
+              </h3>
+              <p className="max-w-lg text-sm text-[color:var(--color-muted)]">
+                Dilly Skills is a free library of the best learning videos on the
+                internet. Start watching. Write a receipt. Share a profile like
+                this of your own.
+              </p>
+              <div className="mt-2 flex gap-2">
+                <Link href="/" className="btn btn-primary">
+                  Start learning →
+                </Link>
+                <Link href="/ask" className="btn btn-ghost">
+                  Ask the library
+                </Link>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+    </div>
+  );
+}
+
+function EmptyProfileState({
+  firstName,
+  isOwner,
+}: {
+  firstName: string;
+  isOwner: boolean;
+}) {
+  // Owner view: concrete steps to fill the profile. Action-oriented.
+  // Visitor view: gentle "nothing here yet" + invitation to start their own.
+  if (isOwner) {
+    return (
+      <section className="container-app pb-20 pt-10 sm:pt-14">
+        <div className="rounded-2xl border border-[color:var(--color-border)] bg-white p-7 sm:p-10">
+          <div className="eyebrow">Your learning profile is empty</div>
+          <h2 className="editorial mt-2 text-2xl tracking-tight sm:text-3xl">
+            Nothing to show — yet.
+          </h2>
+          <p className="mt-3 max-w-xl text-[color:var(--color-muted)]">
+            Your Dilly account is live, but you haven&apos;t used Skill Lab
+            yet. This page fills in automatically as you watch videos and
+            write receipts. Start with any one of these.
           </p>
-          <div className="mt-2 flex gap-2">
-            <Link href="/" className="btn btn-primary">
-              Start learning →
-            </Link>
-            <Link href="/ask" className="btn btn-ghost">
-              Ask the library
-            </Link>
-          </div>
+          <ol className="mt-8 grid gap-3 sm:grid-cols-3">
+            <EmptyStep
+              num={1}
+              href="/"
+              title="Pick a cohort"
+              body="Browse 22 fields. Open any one to see the curator's starting video."
+            />
+            <EmptyStep
+              num={2}
+              href="/ask"
+              title="Ask a real question"
+              body="Natural-language search across the whole library. Free, instant, no LLM tax."
+            />
+            <EmptyStep
+              num={3}
+              href="/today"
+              title="Open Today"
+              body="Your daily pull + receipts queue. This is where the streak starts."
+            />
+          </ol>
         </div>
       </section>
-    </div>
+    );
+  }
+  return (
+    <section className="container-app pb-20 pt-10 sm:pt-14">
+      <div className="card flex flex-col items-center gap-3 px-6 py-12 text-center sm:px-10">
+        <div className="eyebrow">Not started yet</div>
+        <h3 className="editorial text-2xl tracking-tight sm:text-3xl">
+          {firstName} hasn&apos;t picked up Skill Lab.
+        </h3>
+        <p className="max-w-lg text-sm text-[color:var(--color-muted)]">
+          This profile fills in automatically as {firstName} watches
+          videos and writes receipts. Nothing to show today — but you
+          can start your own.
+        </p>
+        <div className="mt-2 flex gap-2">
+          <Link href="/" className="btn btn-primary">
+            Start learning →
+          </Link>
+          <Link href="/ask" className="btn btn-ghost">
+            Ask the library
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function EmptyStep({
+  num,
+  href,
+  title,
+  body,
+}: {
+  num: number;
+  href: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className="group block h-full rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-soft)] p-4 transition hover:border-[color:var(--color-accent)] hover:bg-[color:var(--color-lavender)]"
+      >
+        <div className="flex items-center gap-2">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[color:var(--color-accent)] text-xs font-bold text-white">
+            {num}
+          </span>
+          <span className="text-sm font-semibold text-[color:var(--color-text)]">
+            {title}
+          </span>
+          <span
+            aria-hidden
+            className="ml-auto text-[color:var(--color-dim)] transition group-hover:text-[color:var(--color-accent)]"
+          >
+            →
+          </span>
+        </div>
+        <p className="mt-2 text-xs text-[color:var(--color-muted)]">{body}</p>
+      </Link>
+    </li>
   );
 }
 
