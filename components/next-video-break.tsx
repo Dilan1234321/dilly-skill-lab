@@ -7,7 +7,7 @@ import { DillyFace } from "./dilly-face";
 /**
  * 5-second break between videos. Shown over the player once the current
  * video ends. Progress bar fills, then we route to the next video.
- * Cancellable — the user can click "Stay here" to stop the auto-advance.
+ * Cancellable - the user can click "Stay here" to stop the auto-advance.
  */
 const BREAK_SECONDS = 5;
 

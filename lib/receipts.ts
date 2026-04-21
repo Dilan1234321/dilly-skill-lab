@@ -1,4 +1,4 @@
-// Server-side helpers for learning receipts — the evidence trail behind
+// Server-side helpers for learning receipts - the evidence trail behind
 // every skill claim. Reads from Dilly FastAPI.
 
 import { cookies } from "next/headers";

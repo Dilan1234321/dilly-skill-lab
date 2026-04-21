@@ -13,7 +13,7 @@ type Props = {
 
 /**
  * Editorial feature: a week's "Start here" path, rendered as a numbered
- * sequence. This is the primary differentiator from other video aggregators —
+ * sequence. This is the primary differentiator from other video aggregators -
  * users see a curated syllabus, not a search grid.
  */
 export function FeaturedPath({ cohort, videos, lang }: Props) {

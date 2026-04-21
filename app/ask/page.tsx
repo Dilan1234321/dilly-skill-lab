@@ -31,7 +31,7 @@ export default async function AskPage({
         </h1>
         <p className="mt-4 text-[color:var(--color-muted)] sm:text-lg">
           Plain words. Full sentences. We&apos;ll match it against every curated
-          video in the library — no AI cost, no tracking, just search.
+          video in the library - no AI cost, no tracking, just search.
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export default async function AskPage({
                 <h2 className="editorial mt-2 text-2xl tracking-tight sm:text-3xl">
                   {result.videos.length > 0
                     ? `${result.videos.length} ${result.videos.length === 1 ? "video" : "videos"} for "${query}"`
-                    : "Nothing matched — try a shorter phrase."}
+                    : "Nothing matched - try a shorter phrase."}
                 </h2>
               </div>
             </div>

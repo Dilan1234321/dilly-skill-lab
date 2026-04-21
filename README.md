@@ -7,7 +7,7 @@ Live: https://skills.hellodilly.com
 ## What it is
 
 - **Free public site.** No paywall, no signup wall, no ads.
-- **Editorial curation.** Videos must pass a per-cohort keyword allowlist and a global denylist to appear. Ranked algorithmically — zero LLM calls at request time.
+- **Editorial curation.** Videos must pass a per-cohort keyword allowlist and a global denylist to appear. Ranked algorithmically - zero LLM calls at request time.
 - **Multi-language.** UI localized across English, Spanish, Portuguese, Hindi, French, and Mandarin. Videos filterable by language.
 - **Living interface.** Streak tracking, resume playback, ⌘K command palette, keyboard shortcuts. Feels like a tool, not a brochure.
 - **Tied to the Dilly account system.** One login works for Skill Lab and the full Dilly app. Profiles created here are first-class Dilly profiles.
@@ -47,8 +47,8 @@ scripts/
 
 See `.env.example`. On Vercel, set:
 
-- `DILLY_API_URL` — `https://api.trydilly.com`
-- `NEXT_PUBLIC_SITE_URL` — `https://skills.hellodilly.com`
+- `DILLY_API_URL` - `https://api.trydilly.com`
+- `NEXT_PUBLIC_SITE_URL` - `https://skills.hellodilly.com`
 
 ## Ingest
 

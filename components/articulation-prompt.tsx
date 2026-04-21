@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-/** Lightweight confetti — 14 tiny colored rects that fall for 900ms. */
+/** Lightweight confetti - 14 tiny colored rects that fall for 900ms. */
 function Confetti() {
   const pieces = useMemo(() => {
     const colors = ["#1c2264", "#7b9fff", "#5ecfb0", "#f5b942"];
@@ -36,10 +36,10 @@ function Confetti() {
 }
 
 /**
- * Articulation prompt — Dilly Skills's core "receipts" mechanic.
+ * Articulation prompt - Dilly Skills's core "receipts" mechanic.
  * Appears below the player after the user has engaged for some time. Asks
- * one sentence. That answer becomes a receipt on their profile and —
- * eventually — evidence a recruiter can click to verify a skill claim.
+ * one sentence. That answer becomes a receipt on their profile and -
+ * eventually - evidence a recruiter can click to verify a skill claim.
  *
  * We don't gate watching on the answer. Skipping is fine; answering is
  * what compounds over time.
@@ -58,7 +58,7 @@ export function ArticulationPrompt({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Show the prompt after 60 seconds of the video being in the DOM — a proxy
+  // Show the prompt after 60 seconds of the video being in the DOM - a proxy
   // for the user having actually engaged, not just opened the page.
   useEffect(() => {
     if (!isAuthed) return;
@@ -75,7 +75,7 @@ export function ArticulationPrompt({
   async function submit() {
     const trimmed = value.trim();
     if (trimmed.length < 4) {
-      setError("A sentence, please — ideally how you'd explain it to a friend.");
+      setError("A sentence, please - ideally how you'd explain it to a friend.");
       return;
     }
     setSaving(true);
@@ -157,7 +157,7 @@ export function ArticulationPrompt({
       </div>
       <p className="mt-2 text-xs text-[color:var(--color-muted)]">
         Plain words. Like you&apos;re explaining it to a friend at dinner. This
-        becomes part of your learning trail — recruiters can click into it later.
+        becomes part of your learning trail - recruiters can click into it later.
       </p>
       <textarea
         value={value}
@@ -171,7 +171,7 @@ export function ArticulationPrompt({
         maxLength={500}
         rows={3}
         disabled={saving}
-        placeholder="e.g. LEFT JOIN keeps every row from the left table, even when there&apos;s no match — useful for finding gaps."
+        placeholder="e.g. LEFT JOIN keeps every row from the left table, even when there&apos;s no match - useful for finding gaps."
         className="mt-4 w-full resize-none rounded-lg border border-[color:var(--color-border)] bg-white p-3 text-sm text-[color:var(--color-text)] outline-none transition focus:border-[color:var(--color-accent)]"
       />
       <div className="mt-3 flex items-center justify-between gap-3">

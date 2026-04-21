@@ -9,7 +9,7 @@ import {
   pathProgress,
 } from "@/lib/paths-client";
 
-// Remember which paths we've already fired a celebration for — we only want
+// Remember which paths we've already fired a celebration for - we only want
 // the confetti to play once per completion, not every time the page loads.
 const CELEBRATED_KEY = "skilllab.path_celebrated.v1";
 function loadCelebratedSet(): Set<string> {

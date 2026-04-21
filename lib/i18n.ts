@@ -1,6 +1,6 @@
-// Minimal i18n — no external dependencies. Translations are static strings
+// Minimal i18n - no external dependencies. Translations are static strings
 // keyed by name. Unknown keys fall back to English so nothing ever renders
-// as a raw key. Video titles themselves stay in their source language — we
+// as a raw key. Video titles themselves stay in their source language - we
 // filter by language instead of translating content.
 
 export type LangCode = "en" | "es" | "pt" | "hi" | "fr" | "zh";
@@ -52,7 +52,7 @@ const T: Translations = {
     "cohort.filter.any": "Any length",
     "cohort.empty.title": "We're still pulling the first batch of videos for this cohort.",
     "cohort.empty.subtitle": "Nightly ingestion runs at 3am ET. Come back tomorrow.",
-    "cohort.lang_fallback": "No videos yet in your language for this cohort — showing English picks.",
+    "cohort.lang_fallback": "No videos yet in your language for this cohort - showing English picks.",
 
     // Video page
     "video.save": "Save to library",
@@ -75,7 +75,7 @@ const T: Translations = {
 
     // Auth
     "auth.signin.title": "Sign in or create an account",
-    "auth.signin.subtitle": "One login works across Dilly Skills and the full Dilly app. No password — we email you a code.",
+    "auth.signin.subtitle": "One login works across Dilly Skills and the full Dilly app. No password - we email you a code.",
     "auth.code.title": "Check your email",
     "auth.code.subtitle": "We sent a 6-digit code to {email}. It expires in a few minutes.",
     "auth.field.email": "Email",
@@ -128,7 +128,7 @@ const T: Translations = {
     "cohort.filter.any": "Cualquier duración",
     "cohort.empty.title": "Aún estamos reuniendo la primera tanda de videos para esta cohorte.",
     "cohort.empty.subtitle": "La ingesta nocturna se ejecuta a las 3am ET. Vuelve mañana.",
-    "cohort.lang_fallback": "Aún no hay videos en tu idioma para esta cohorte — mostrando selecciones en inglés.",
+    "cohort.lang_fallback": "Aún no hay videos en tu idioma para esta cohorte - mostrando selecciones en inglés.",
 
     "video.save": "Guardar en biblioteca",
     "video.saved": "Guardado ✓",
@@ -148,7 +148,7 @@ const T: Translations = {
     "library.already": "¿Ya tienes cuenta?",
 
     "auth.signin.title": "Iniciar sesión o crear cuenta",
-    "auth.signin.subtitle": "Un solo inicio de sesión funciona en Dilly Skills y en la app completa de Dilly. Sin contraseña — te enviamos un código.",
+    "auth.signin.subtitle": "Un solo inicio de sesión funciona en Dilly Skills y en la app completa de Dilly. Sin contraseña - te enviamos un código.",
     "auth.code.title": "Revisa tu correo",
     "auth.code.subtitle": "Enviamos un código de 6 dígitos a {email}. Expira en unos minutos.",
     "auth.field.email": "Correo",
@@ -200,7 +200,7 @@ const T: Translations = {
     "cohort.filter.any": "Qualquer duração",
     "cohort.empty.title": "Ainda estamos reunindo a primeira leva de vídeos para esta coorte.",
     "cohort.empty.subtitle": "A ingestão noturna roda às 3h ET. Volte amanhã.",
-    "cohort.lang_fallback": "Ainda não há vídeos no seu idioma para esta coorte — mostrando seleções em inglês.",
+    "cohort.lang_fallback": "Ainda não há vídeos no seu idioma para esta coorte - mostrando seleções em inglês.",
 
     "video.save": "Salvar na biblioteca",
     "video.saved": "Salvo ✓",
@@ -220,7 +220,7 @@ const T: Translations = {
     "library.already": "Já tem uma conta?",
 
     "auth.signin.title": "Entrar ou criar conta",
-    "auth.signin.subtitle": "Um único login funciona no Dilly Skills e no app Dilly completo. Sem senha — enviamos um código por e-mail.",
+    "auth.signin.subtitle": "Um único login funciona no Dilly Skills e no app Dilly completo. Sem senha - enviamos um código por e-mail.",
     "auth.code.title": "Cheque seu e-mail",
     "auth.code.subtitle": "Enviamos um código de 6 dígitos para {email}. Expira em alguns minutos.",
     "auth.field.email": "E-mail",
@@ -272,7 +272,7 @@ const T: Translations = {
     "cohort.filter.any": "कोई भी अवधि",
     "cohort.empty.title": "हम अभी इस कोहर्ट के लिए वीडियो एकत्र कर रहे हैं।",
     "cohort.empty.subtitle": "रात्रिकालीन अंतर्ग्रहण 3 बजे ET पर चलता है। कल वापस आएँ।",
-    "cohort.lang_fallback": "इस कोहर्ट के लिए आपकी भाषा में अभी कोई वीडियो नहीं — अंग्रेज़ी चयन दिखा रहे हैं।",
+    "cohort.lang_fallback": "इस कोहर्ट के लिए आपकी भाषा में अभी कोई वीडियो नहीं - अंग्रेज़ी चयन दिखा रहे हैं।",
 
     "video.save": "लाइब्रेरी में सहेजें",
     "video.saved": "सहेजा गया ✓",
@@ -292,7 +292,7 @@ const T: Translations = {
     "library.already": "पहले से खाता है?",
 
     "auth.signin.title": "साइन इन या खाता बनाएँ",
-    "auth.signin.subtitle": "एक ही लॉगिन Dilly Skills और पूरे Dilly ऐप पर काम करता है। कोई पासवर्ड नहीं — हम कोड ईमेल करते हैं।",
+    "auth.signin.subtitle": "एक ही लॉगिन Dilly Skills और पूरे Dilly ऐप पर काम करता है। कोई पासवर्ड नहीं - हम कोड ईमेल करते हैं।",
     "auth.code.title": "अपना ईमेल देखें",
     "auth.code.subtitle": "हमने {email} पर 6 अंकों का कोड भेजा। कुछ ही मिनट में समाप्त होगा।",
     "auth.field.email": "ईमेल",
@@ -344,7 +344,7 @@ const T: Translations = {
     "cohort.filter.any": "Toute durée",
     "cohort.empty.title": "Nous rassemblons encore la première sélection de vidéos pour cette cohorte.",
     "cohort.empty.subtitle": "L'ingestion nocturne s'exécute à 3h ET. Revenez demain.",
-    "cohort.lang_fallback": "Pas encore de vidéos dans votre langue pour cette cohorte — nous affichons les sélections en anglais.",
+    "cohort.lang_fallback": "Pas encore de vidéos dans votre langue pour cette cohorte - nous affichons les sélections en anglais.",
 
     "video.save": "Enregistrer",
     "video.saved": "Enregistré ✓",
@@ -364,7 +364,7 @@ const T: Translations = {
     "library.already": "Déjà un compte ?",
 
     "auth.signin.title": "Se connecter ou créer un compte",
-    "auth.signin.subtitle": "Un seul login fonctionne pour Dilly Skills et l'app Dilly complète. Pas de mot de passe — nous envoyons un code par e-mail.",
+    "auth.signin.subtitle": "Un seul login fonctionne pour Dilly Skills et l'app Dilly complète. Pas de mot de passe - nous envoyons un code par e-mail.",
     "auth.code.title": "Vérifiez votre e-mail",
     "auth.code.subtitle": "Nous avons envoyé un code à 6 chiffres à {email}. Il expire dans quelques minutes.",
     "auth.field.email": "E-mail",
@@ -416,7 +416,7 @@ const T: Translations = {
     "cohort.filter.any": "任意时长",
     "cohort.empty.title": "我们仍在为此学科整理首批视频。",
     "cohort.empty.subtitle": "每晚 ET 凌晨 3 点更新。明天再来。",
-    "cohort.lang_fallback": "此学科暂无你语言的视频 — 显示英文精选。",
+    "cohort.lang_fallback": "此学科暂无你语言的视频 - 显示英文精选。",
 
     "video.save": "保存到收藏库",
     "video.saved": "已保存 ✓",
@@ -436,7 +436,7 @@ const T: Translations = {
     "library.already": "已有账户？",
 
     "auth.signin.title": "登录或创建账户",
-    "auth.signin.subtitle": "一次登录，Dilly Skills 和完整 Dilly 应用通用。无需密码 — 我们通过邮件发送验证码。",
+    "auth.signin.subtitle": "一次登录，Dilly Skills 和完整 Dilly 应用通用。无需密码 - 我们通过邮件发送验证码。",
     "auth.code.title": "查看你的邮件",
     "auth.code.subtitle": "我们已向 {email} 发送 6 位验证码。几分钟内有效。",
     "auth.field.email": "邮箱",

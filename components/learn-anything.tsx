@@ -2,14 +2,14 @@ import Link from "next/link";
 import { HomeAskInput } from "./home-ask-input";
 
 /**
- * "Learn anything" — the universal, anyone-can-learn block that replaces
+ * "Learn anything" - the universal, anyone-can-learn block that replaces
  * the old role-segmented editorial paths. Dilly Skills positions itself
  * as a library everyone shares, not a set of pre-defined tracks.
  *
  * Four pieces, in order of gravity:
  *   1. Oversize manifesto-feel headline + the ask input front and center.
  *   2. Quick-prompt tag cloud to seed ideas for anyone arriving cold.
- *   3. "Pillars" — three plainly-written promises, not role tracks.
+ *   3. "Pillars" - three plainly-written promises, not role tracks.
  *   4. Link to the full cohort browser.
  */
 export function LearnAnything({ populatedNames }: { populatedNames: string[] }) {
@@ -29,12 +29,12 @@ export function LearnAnything({ populatedNames }: { populatedNames: string[] }) 
         </p>
       </div>
 
-      {/* ── The single input: Ask — real input, Enter submits ─────── */}
+      {/* ── The single input: Ask - real input, Enter submits ─────── */}
       <div className="mx-auto mt-10 max-w-3xl">
         <HomeAskInput />
       </div>
 
-      {/* ── Quick prompts — shows range, sparks ideas ─────── */}
+      {/* ── Quick prompts - shows range, sparks ideas ─────── */}
       <div className="mx-auto mt-6 max-w-4xl">
         <div className="mb-3 text-center text-xs uppercase tracking-wider text-[color:var(--color-dim)]">
           Or try one of these

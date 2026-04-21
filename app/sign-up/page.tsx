@@ -15,7 +15,7 @@ import { sharedCookie } from "@/lib/cookie-scope";
 import { SignupStartForm } from "@/components/signup-start-form";
 
 /**
- * Dilly Skills sign-up — the fastest path to a *legitimate* Dilly profile.
+ * Dilly Skills sign-up - the fastest path to a *legitimate* Dilly profile.
  *
  * Three screens, zero resume upload:
  *   1. name + email + user type (.edu enables student path)
@@ -97,7 +97,7 @@ async function handleVerify(formData: FormData) {
 
   // Persist user_type onto the profile so Dilly's URL rule routes this
   // account to the correct public profile page (/s/{slug} vs /p/{slug}).
-  // Dilly treats unset user_type as "student" — that's wrong for people
+  // Dilly treats unset user_type as "student" - that's wrong for people
   // who picked "Anyone else" at step 1. Only PATCH when the field is
   // empty so we never overwrite an existing setting from the mobile app.
   const existingType = (profile?.user_type as string | undefined)?.trim();
@@ -115,7 +115,7 @@ async function handleVerify(formData: FormData) {
     redirect(next);
   }
 
-  // New user — collect name/role/goal.
+  // New user - collect name/role/goal.
   const q = new URLSearchParams({ name, next, t: ut, step: "profile" });
   redirect(`/sign-up?${q.toString()}`);
 }
@@ -172,7 +172,7 @@ export default async function SignUpPage({
   const ut = sp.t ?? "g";
 
   const reasonCopy: Record<string, string> = {
-    progress: "Save your streak, library, and watched history — free forever.",
+    progress: "Save your streak, library, and watched history - free forever.",
     save: "Make an account so we can save that video to your library.",
   };
   const hint = sp.reason ? reasonCopy[sp.reason] : null;
@@ -283,7 +283,7 @@ export default async function SignUpPage({
             One last thing, {namePrefill.split(" ")[0] || "hey"}.
           </h1>
           <p className="mt-4 text-[color:var(--color-muted)] sm:text-lg">
-            Helps us curate your library. Skip any field — you can edit later.
+            Helps us curate your library. Skip any field - you can edit later.
           </p>
 
           <form action={handleProfile} className="mt-8 space-y-5">
@@ -307,7 +307,7 @@ export default async function SignUpPage({
                   defaultValue=""
                   className="mt-2 w-full rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3.5 py-3 text-base outline-none focus:border-[color:var(--color-accent)]"
                 >
-                  <option value="">— Pick your role —</option>
+                  <option value="">- Pick your role -</option>
                   {INDUSTRIES.map((i) => (
                     <option key={i.slug} value={i.name}>
                       {i.emoji} {i.name}

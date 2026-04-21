@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /**
- * Three hand-picked starting points. Deliberately NOT a tile grid — this is
+ * Three hand-picked starting points. Deliberately NOT a tile grid - this is
  * "the editor's choice" frame, a magazine's front page, not a chooser.
  * Each card routes to an existing industry page so the underlying curation
  * keeps working automatically.
@@ -17,7 +17,7 @@ const PATHS: {
     eyebrow: "For engineers",
     title: "Ship 10× more with AI as your pair.",
     subtitle:
-      "System design, code-review judgment, and the craft of owning production — the things Copilot can't do for you.",
+      "System design, code-review judgment, and the craft of owning production - the things Copilot can't do for you.",
   },
   {
     slug: "marketer",
@@ -31,7 +31,7 @@ const PATHS: {
     eyebrow: "For students",
     title: "Stack the skills AI can't automate away.",
     subtitle:
-      "School prepares you for the last era. Learn what your courses don't — prompting as a thinking tool, data literacy, and building real projects.",
+      "School prepares you for the last era. Learn what your courses don't - prompting as a thinking tool, data literacy, and building real projects.",
   },
 ];
 

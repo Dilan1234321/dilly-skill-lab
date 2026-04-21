@@ -6,7 +6,7 @@ import type { ReceiptsSummary } from "@/lib/receipts";
 import { formatDuration } from "@/lib/utils";
 
 /**
- * "Today" panel — the new homepage hero. Replaces marketing copy with an
+ * "Today" panel - the new homepage hero. Replaces marketing copy with an
  * actual, ready-to-play pick + the viewer's live state. This is what
  * changes the feel from "website" to "workspace".
  */
@@ -97,7 +97,7 @@ export function TodayPanel({
             <p className="mt-4 text-base text-[color:var(--color-muted)] sm:text-lg">
               {returning
                 ? "Your next video is queued. Press Space or click play to start."
-                : "Hit play. That's the whole pitch. No signup, no paywall, no scrolling — just the best video we'd hand a real student right now."}
+                : "Hit play. That's the whole pitch. No signup, no paywall, no scrolling - just the best video we'd hand a real student right now."}
             </p>
           </div>
 
@@ -109,7 +109,7 @@ export function TodayPanel({
           />
 
           {/* Only show the cohort quick-link when the hero is NOT already the
-              last-watched video — otherwise it's redundant. */}
+              last-watched video - otherwise it's redundant. */}
           {lastWatched && !resume && (
             <Link
               href={`/cohort/${lastWatched.cohort}`}
@@ -152,7 +152,7 @@ function ProgressLockNudge({ streak }: { streak: number }) {
             Don&apos;t lose your {streak}-day streak
           </div>
           <div className="mt-1 text-xs leading-relaxed text-[color:var(--color-muted)]">
-            Save progress to your free Dilly account — takes 20 seconds, keeps
+            Save progress to your free Dilly account - takes 20 seconds, keeps
             your streak on every device.
           </div>
         </div>
@@ -169,7 +169,7 @@ function ProgressLockNudge({ streak }: { streak: number }) {
  * "Xh this month · N videos · N fields." For anonymous visitors or users
  * with no receipts yet, falls back to the generic streak/fresh/fields row.
  *
- * The copy change is the whole point — the moment the user has *any*
+ * The copy change is the whole point - the moment the user has *any*
  * receipt, the product stops looking like a content browser and starts
  * looking like their learning log.
  */
@@ -210,7 +210,7 @@ function LiveStats({
         />
         <Stat
           label="Streak"
-          value={streak ? `${streak}d` : "—"}
+          value={streak ? `${streak}d` : "-"}
           hot={streak >= 3}
         />
       </div>
@@ -221,12 +221,12 @@ function LiveStats({
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       <Stat
         label="Streak"
-        value={streak ? `${streak}d` : "—"}
+        value={streak ? `${streak}d` : "-"}
         hot={streak >= 3}
       />
       <Stat
         label="Fresh today"
-        value={fresh > 0 ? `${fresh} new` : "—"}
+        value={fresh > 0 ? `${fresh} new` : "-"}
         hot={fresh > 0}
       />
       <Stat label="Fields" value="22" />

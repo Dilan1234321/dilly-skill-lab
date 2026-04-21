@@ -5,7 +5,7 @@ import { getPath } from "@/lib/paths-client";
 
 /**
  * Replaces the generic step-number bubble when the user is on a committed
- * path — turns into a filled accent dot with a check once the step is done.
+ * path - turns into a filled accent dot with a check once the step is done.
  * Returns null on non-committed or non-matching cohorts so the default
  * number keeps rendering.
  */
@@ -64,7 +64,7 @@ export function PathStepDot({
     );
   }
 
-  // "pending" — still show the number, but with the committed-path ring color
+  // "pending" - still show the number, but with the committed-path ring color
   return (
     <span
       aria-label={`Step ${stepNumber}, not yet watched`}

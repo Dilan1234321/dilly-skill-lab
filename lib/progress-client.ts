@@ -1,6 +1,6 @@
 // Client-side progress store backed by localStorage. Handles the richer state
 // that would blow up a cookie (watched video ids, seconds invested today).
-// Everything here is optional enhancement — the server still works without it.
+// Everything here is optional enhancement - the server still works without it.
 
 "use client";
 

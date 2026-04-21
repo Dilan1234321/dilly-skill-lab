@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 
 /**
  * Step 1 of sign-up. A client form so we can validate the .edu requirement
- * inline without a round-trip — "I'm a College student" + non-.edu email
+ * inline without a round-trip - "I'm a College student" + non-.edu email
  * is the single most common sign-up footgun, worth catching immediately.
  *
  * The server action (handleStart) still runs on submit. This form just
@@ -34,9 +34,9 @@ export function SignupStartForm({
     if (!trimmed) return null;
     // Only the student path has a hard rule
     if (userType === "student" && !/\.edu\s*$/.test(trimmed)) {
-      return ".edu required — students sign up with their school email.";
+      return ".edu required - students sign up with their school email.";
     }
-    // Basic shape check — not a fortress, just don't waste a round-trip
+    // Basic shape check - not a fortress, just don't waste a round-trip
     if (trimmed && (!trimmed.includes("@") || !trimmed.includes(".")))
       return "That doesn't look like an email yet.";
     return null;

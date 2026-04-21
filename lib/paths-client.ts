@@ -1,4 +1,4 @@
-// Client-side learning-path commitments. Zero server state — everything
+// Client-side learning-path commitments. Zero server state - everything
 // lives in localStorage so anonymous users get the full commit/progress
 // experience, and signed-in users get a durable record once we wire this
 // into the profile receipts stream.
@@ -103,7 +103,7 @@ export function pathProgress(state: PathState | null): {
 
 /**
  * For a given video, returns the cohort slug of an active path it belongs to
- * — if any. Used by the video player to auto-mark a step complete when the
+ * - if any. Used by the video player to auto-mark a step complete when the
  * user finishes (or engages 30s+ with) the video.
  */
 export function activePathForVideo(videoId: string): string | null {

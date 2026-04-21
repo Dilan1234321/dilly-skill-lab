@@ -1,4 +1,4 @@
-// Industries — the primary entry point for working adults. Each industry maps
+// Industries - the primary entry point for working adults. Each industry maps
 // to cohort slugs (where we already have curated videos) AND a list of AI-era
 // skills that matter most for that role. This is Dilly Skills's answer to "what
 // should I learn so I'm not replaced by AI?"
@@ -14,7 +14,7 @@ export type Industry = {
   at_risk: string;         // what AI can replace (honest, not doomer)
   moat: string;            // what keeps you valuable
   ai_skills: string[];     // the 5–7 skills to learn NOW
-  cohort_slugs: string[];  // from lib/cohorts.ts — drives video selection
+  cohort_slugs: string[];  // from lib/cohorts.ts - drives video selection
   emoji: string;
 };
 
@@ -284,7 +284,7 @@ export const INDUSTRIES: Industry[] = [
     slug: "student",
     name: "Student",
     tagline: "Stack the skills compound interest can't automate away.",
-    blurb: "School prepares you for the last era. AI-native students will pull ahead by learning what their courses don't teach — the fundamentals and the new tools.",
+    blurb: "School prepares you for the last era. AI-native students will pull ahead by learning what their courses don't teach - the fundamentals and the new tools.",
     at_risk: "Copy-paste coursework, rote memorization",
     moat: "Deep understanding, real projects, network, range",
     ai_skills: [

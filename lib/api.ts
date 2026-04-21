@@ -26,7 +26,7 @@ async function api<T>(
   const res = await fetch(`${API_URL}${path}`, {
     ...init,
     headers,
-    // Server component caching is governed by Cache Components — no default revalidation here.
+    // Server component caching is governed by Cache Components - no default revalidation here.
     cache: init?.cache ?? "no-store",
   });
 
@@ -143,7 +143,7 @@ export async function unsaveVideo(videoId: string): Promise<boolean> {
 
 // ── Session ───────────────────────────────────────────────────────────────────
 // Dilly uses email + 6-digit verification code auth. There's no password and
-// no separate sign-up endpoint — /auth/verify-code creates the profile on
+// no separate sign-up endpoint - /auth/verify-code creates the profile on
 // first verification and just issues a session on subsequent ones.
 
 export async function getSession(): Promise<SessionUser | null> {
@@ -201,7 +201,7 @@ export async function getProfile(): Promise<Record<string, unknown> | null> {
  * GET /profile/photo returns 2xx when a photo exists, 404 when not.
  *
  * FastAPI's @router.get doesn't auto-expose HEAD, so we do a GET with a
- * Range header that asks for a single byte — keeps the payload tiny while
+ * Range header that asks for a single byte - keeps the payload tiny while
  * still getting a definitive status.
  */
 export async function hasProfilePhoto(): Promise<boolean> {

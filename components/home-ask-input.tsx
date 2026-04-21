@@ -44,7 +44,7 @@ export function HomeAskInput() {
         onKeyDown={(e) => {
           if (e.key === "Enter") go(e);
         }}
-        placeholder="What do you want to learn? — anything goes."
+        placeholder="What do you want to learn? - anything goes."
         aria-label="Ask Dilly Skills"
         autoComplete="off"
         autoCorrect="off"

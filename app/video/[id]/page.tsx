@@ -31,7 +31,7 @@ export default async function VideoPage({
   // Streak + last-watched are written from the client-side <WatchTracker/>
   // (server components can't mutate cookies).
 
-  // "Where this fits" — pull the cohort's best and find this video's position.
+  // "Where this fits" - pull the cohort's best and find this video's position.
   const cohortTopVideos = cohort
     ? await listVideosByCohort(cohort.slug, { limit: 12, sort: "best", lang }).catch(() => [])
     : [];

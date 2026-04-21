@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
  * Dilly backend, keyed into profile_json.web_profile_settings so they
  * sync across every Dilly surface.
  *
- * Toggles default ON — the ecosystem is seamless out of the box. Users
+ * Toggles default ON - the ecosystem is seamless out of the box. Users
  * who want to silo their profiles can turn either off.
  */
 export function CrossLinkPrivacy({

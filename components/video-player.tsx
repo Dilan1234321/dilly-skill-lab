@@ -127,7 +127,7 @@ export function VideoPlayer({
             const ENDED = window.YT?.PlayerState.ENDED ?? 0;
             if (state === ENDED) {
               clearResumePosition(videoId);
-              // Auto-advance — handled by the NextVideoBreak overlay below.
+              // Auto-advance - handled by the NextVideoBreak overlay below.
               if (nextVideoId) setShowBreak(true);
             }
           },
@@ -135,7 +135,7 @@ export function VideoPlayer({
       });
       playerRef.current = player;
 
-      // Persist playhead every 5 seconds — tiny localStorage writes.
+      // Persist playhead every 5 seconds - tiny localStorage writes.
       saveInterval = window.setInterval(() => {
         const p = playerRef.current;
         if (!p) return;
@@ -167,7 +167,7 @@ export function VideoPlayer({
           if (pathCohort) markStepComplete(pathCohort, videoId);
           markedWatched = true;
         }
-        // Flush a receipt beacon every 60s of engaged time. Fire-and-forget —
+        // Flush a receipt beacon every 60s of engaged time. Fire-and-forget -
         // failures are silent (network blips shouldn't break watching).
         if (sinceLastReceipt >= 60) {
           fetch("/api/receipts", {

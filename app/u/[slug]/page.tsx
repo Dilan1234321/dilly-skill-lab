@@ -28,7 +28,7 @@ export default async function PublicProfilePage({
   const isOwner = viewerSlug !== null && viewerSlug === slug.trim().toLowerCase();
 
   // A profile is "empty" when the owner exists in Dilly but has no Skill
-  // Lab engagement yet — no videos watched, no receipts, no cohorts
+  // Lab engagement yet - no videos watched, no receipts, no cohorts
   // touched. Common for people who made their Dilly account in the mobile
   // app and haven't used Skill Lab yet.
   const isEmpty =
@@ -113,7 +113,7 @@ export default async function PublicProfilePage({
               )}
             </div>
 
-            {/* Hero stats — suppressed on an empty profile so it doesn't read
+            {/* Hero stats - suppressed on an empty profile so it doesn't read
                 as a row of dead zeros. The empty-state panel below replaces
                 it with an action-oriented card instead. */}
             {!isEmpty && (
@@ -194,7 +194,7 @@ export default async function PublicProfilePage({
               {profile.first_name}&apos;s mastery map.
             </h2>
             <p className="mt-2 max-w-2xl text-[color:var(--color-muted)]">
-              Every chip is backed by real engagement — minutes invested,
+              Every chip is backed by real engagement - minutes invested,
               videos watched, takeaways articulated. Not self-reported.
             </p>
             <ul className="mt-8 grid gap-2 sm:grid-cols-2">
@@ -267,7 +267,7 @@ function EmptyProfileState({
         <div className="rounded-2xl border border-[color:var(--color-border)] bg-white p-7 sm:p-10">
           <div className="eyebrow">Your learning profile is empty</div>
           <h2 className="editorial mt-2 text-2xl tracking-tight sm:text-3xl">
-            Nothing to show — yet.
+            Nothing to show - yet.
           </h2>
           <p className="mt-3 max-w-xl text-[color:var(--color-muted)]">
             Your Dilly account is live, but you haven&apos;t used Skill Lab
@@ -307,7 +307,7 @@ function EmptyProfileState({
         </h3>
         <p className="max-w-lg text-sm text-[color:var(--color-muted)]">
           This profile fills in automatically as {firstName} watches
-          videos and writes receipts. Nothing to show today — but you
+          videos and writes receipts. Nothing to show today - but you
           can start your own.
         </p>
         <div className="mt-2 flex gap-2">

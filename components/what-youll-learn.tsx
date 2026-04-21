@@ -2,7 +2,7 @@ import type { Video } from "@/lib/types";
 
 /**
  * Renders the pre-generated bulleted summary for a video. Comes from one of
- * two sources — parsed creator chapters or a cached Haiku pass — and is
+ * two sources - parsed creator chapters or a cached Haiku pass - and is
  * fetched as plain text from the DB. Zero LLM at request time.
  *
  * Silent when no summary exists (not every video has one).

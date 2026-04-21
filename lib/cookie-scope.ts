@@ -1,6 +1,6 @@
 // Cookie-scope helper. In production we want the session + streak + language
-// cookies to work across every *.hellodilly.com subdomain — skills,
-// app, marketing — so the Dilly ecosystem feels like one product. In dev
+// cookies to work across every *.hellodilly.com subdomain - skills,
+// app, marketing - so the Dilly ecosystem feels like one product. In dev
 // (localhost) the browser rejects explicit domains, so we just omit it.
 //
 // Controlled by SKILLS_COOKIE_DOMAIN env (default ".hellodilly.com" in prod).

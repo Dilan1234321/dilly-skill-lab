@@ -5,7 +5,7 @@ import { listPopulatedCohorts } from "@/lib/api";
 
 /**
  * Index-style cohort list. Only shows cohorts that actually have videos
- * in the library — empty cohorts stay hidden until the next ingest fills
+ * in the library - empty cohorts stay hidden until the next ingest fills
  * them. Fetched server-side; silently falls back to the full list if the
  * /cohorts/populated endpoint is unavailable.
  */

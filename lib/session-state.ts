@@ -2,10 +2,10 @@
 // Lab feel like a place where you're actually doing something, not a brochure.
 //
 // Two cookies:
-//   - `skilllab_streak_v1`    JSON: { streak, last } — days-in-a-row + last ISO date
-//   - `skilllab_last_watched_v1`  JSON: { id, cohort, at } — most recent video
+//   - `skilllab_streak_v1`    JSON: { streak, last } - days-in-a-row + last ISO date
+//   - `skilllab_last_watched_v1`  JSON: { id, cohort, at } - most recent video
 //
-// Keep both small — cookies are sent on every request. Heavier state
+// Keep both small - cookies are sent on every request. Heavier state
 // (watched_video_ids, time_invested_today) lives in localStorage.
 
 import { cookies } from "next/headers";

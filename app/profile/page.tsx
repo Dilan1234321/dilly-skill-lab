@@ -17,7 +17,7 @@ export const metadata = {
 };
 
 // ────────────────────────────────────────────────────────────────────────────
-// Field helpers — profile comes from Dilly as an untyped JSON blob
+// Field helpers - profile comes from Dilly as an untyped JSON blob
 // ────────────────────────────────────────────────────────────────────────────
 
 function s(p: Record<string, unknown> | null, key: string): string | null {
@@ -64,21 +64,25 @@ export default async function ProfilePage() {
   const linkedin = s(profile, "linkedin_url");
   const readableSlug = s(profile, "readable_slug");
 
-  // Public Skill Lab profile lives at /u/{slug} on the same domain. Dilly's
-  // recruiter-facing profile (hellodilly.com/s/... or /p/...) is a different
-  // product and we don't link to it from Skill Lab until that's launched.
+  // Public Skill Lab profile: canonical URL now mirrors Dilly's convention
+  // (/s/{slug} for students, /p/{slug} for everyone else). /u/{slug} still
+  // works as a compatibility alias for older share links.
+  // Rule matches Dilly's generate-slug: unset user_type defaults to student,
+  // only "general" and "professional" fall on the /p prefix.
+  const userType = (s(profile, "user_type") ?? "student").toLowerCase();
+  const profilePrefix = ["general", "professional"].includes(userType) ? "p" : "s";
   const siteBase =
     (process.env.NEXT_PUBLIC_SITE_URL ?? "https://skills.hellodilly.com")
       .replace(/^https?:\/\//, "")
       .replace(/\/$/, "");
-  const publicProfileUrl = readableSlug ? `/u/${readableSlug}` : null;
+  const publicProfileUrl = readableSlug ? `/${profilePrefix}/${readableSlug}` : null;
   const publicProfileLabel = readableSlug
-    ? `${siteBase}/u/${readableSlug}`
+    ? `${siteBase}/${profilePrefix}/${readableSlug}`
     : null;
 
   const majors = arr(profile, "majors");
   const major = s(profile, "major");
-  // Dedupe case-insensitively — 'major' is often duplicated in 'majors[0]'
+  // Dedupe case-insensitively - 'major' is often duplicated in 'majors[0]'
   const seenMajors = new Set<string>();
   const allMajors = [major, ...majors]
     .filter((m): m is string => typeof m === "string" && m.trim().length > 0)
@@ -121,7 +125,7 @@ export default async function ProfilePage() {
   // Cache-bust the avatar when anything photo-related changes
   const hasPhotoBust = (profile?.photo_updated_at as string | undefined) ?? String(photoExists);
 
-  // Cross-link privacy flags — both default ON. Keep the read here so
+  // Cross-link privacy flags - both default ON. Keep the read here so
   // CrossLinkPrivacy mirrors server state on mount without a round-trip.
   const rawWebSettings = profile?.web_profile_settings;
   const webSettings =
@@ -157,7 +161,7 @@ export default async function ProfilePage() {
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {readableSlug && (
-              <ShareProfileChip slug={readableSlug} />
+              <ShareProfileChip slug={readableSlug} prefix={profilePrefix} />
             )}
             {publicProfileUrl && publicProfileLabel && (
               <a
@@ -191,7 +195,7 @@ export default async function ProfilePage() {
         </section>
       )}
 
-      {/* ═══ Receipts — the evidence trail ═══ */}
+      {/* ═══ Receipts - the evidence trail ═══ */}
       {receipts && (receipts.total_seconds > 0 || receipts.videos_engaged > 0) && (
         <section className="mt-16">
           <div className="flex items-end justify-between gap-4 border-b border-[color:var(--color-border)] pb-4">

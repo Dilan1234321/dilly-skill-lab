@@ -1,9 +1,9 @@
 import type { ReceiptDay } from "@/lib/receipts";
 
 /**
- * Learning Trail — 60-day heatmap of the user's engaged minutes per day.
+ * Learning Trail - 60-day heatmap of the user's engaged minutes per day.
  * Modeled on GitHub's contribution graph: one cell per day, color intensity
- * scales with minutes. Empty days are shown explicitly — consistency is the
+ * scales with minutes. Empty days are shown explicitly - consistency is the
  * story, not volume.
  */
 export function LearningTrail({ daily }: { daily: ReceiptDay[] }) {

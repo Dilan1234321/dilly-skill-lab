@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import path from "node:path";
 
 const nextConfig: NextConfig = {
-  // Silence the multi-lockfile warning — this project's root is skill-lab/,
+  // Silence the multi-lockfile warning - this project's root is skill-lab/,
   // not the monorepo root.
   turbopack: {
     root: path.resolve(__dirname),

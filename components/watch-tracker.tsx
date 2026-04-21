@@ -20,7 +20,7 @@ export function WatchTracker({
   cohort: string | null;
 }) {
   useEffect(() => {
-    // Fire-and-forget. Errors are silent — losing a streak bump isn't critical.
+    // Fire-and-forget. Errors are silent - losing a streak bump isn't critical.
     if (cohort) {
       fetch("/api/activity", {
         method: "POST",

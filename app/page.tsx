@@ -28,7 +28,7 @@ export default async function HomePage() {
     isFirstVisit(),
     getSession().catch(() => null),
   ]);
-  // Only fetch profile + receipts when signed in — anonymous visits stay cheap.
+  // Only fetch profile + receipts when signed in - anonymous visits stay cheap.
   const [profile, receipts] = session
     ? await Promise.all([
         getProfile().catch(() => null),
@@ -92,7 +92,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ═══ The living front door — one pick, your state ═══ */}
+      {/* ═══ The living front door - one pick, your state ═══ */}
       {pick ? (
         <TodayPanel
           video={pick}

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Reveal — fades a child up into view when it scrolls into the viewport.
+ * Reveal - fades a child up into view when it scrolls into the viewport.
  * Uses IntersectionObserver; falls back to immediate visibility if unsupported.
  * Respects prefers-reduced-motion.
  */
@@ -56,7 +56,7 @@ export function Reveal({
     willChange: "opacity, transform",
   };
 
-  // Cast for the polymorphic tag — TS has no first-class way to forward.
+  // Cast for the polymorphic tag - TS has no first-class way to forward.
   const Element = Tag as unknown as React.ElementType;
   return (
     <Element ref={ref} style={style} className={className}>

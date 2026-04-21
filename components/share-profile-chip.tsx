@@ -3,10 +3,17 @@
 import { useState } from "react";
 
 /**
- * Copy-to-clipboard share chip for the user's own /u/{slug} Dilly Skills
- * public profile. One click, instant copy, 2s confirmation.
+ * Copy-to-clipboard share chip for the user's own public Dilly Skills
+ * profile. Uses the Dilly-convention prefix (/s or /p) passed in by the
+ * caller so the shared link matches the user's career profile URL.
  */
-export function ShareProfileChip({ slug }: { slug: string }) {
+export function ShareProfileChip({
+  slug,
+  prefix = "s",
+}: {
+  slug: string;
+  prefix?: "s" | "p";
+}) {
   const [copied, setCopied] = useState(false);
 
   async function onClick() {
@@ -14,7 +21,7 @@ export function ShareProfileChip({ slug }: { slug: string }) {
       typeof window !== "undefined"
         ? window.location.origin
         : "https://skills.hellodilly.com";
-    const url = `${origin}/u/${slug}`;
+    const url = `${origin}/${prefix}/${slug}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);

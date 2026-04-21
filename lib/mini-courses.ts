@@ -1,4 +1,4 @@
-// Mini-courses — Skill Lab's packaged learning. Each course is a sequenced
+// Mini-courses - Skill Lab's packaged learning. Each course is a sequenced
 // set of videos pulled from a single cohort's top picks, presented as a
 // course with a clear outcome. This is the core "structured learning, not a
 // playlist" differentiator.
@@ -31,7 +31,7 @@ export const MINI_COURSES: MiniCourse[] = [
     slug: "sql-fundamentals",
     title: "SQL fundamentals, done right",
     outcome:
-      "Write queries you trust. Window functions, joins, subqueries — no magic.",
+      "Write queries you trust. Window functions, joins, subqueries - no magic.",
     cohort: "data-science-analytics",
     videoCount: 4,
     accent: "green",

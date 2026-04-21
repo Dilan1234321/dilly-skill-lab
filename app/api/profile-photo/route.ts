@@ -34,7 +34,7 @@ export async function GET() {
     status: 200,
     headers: {
       "content-type": res.headers.get("content-type") ?? "image/jpeg",
-      // Cache briefly — change of photo invalidates via a query param
+      // Cache briefly - change of photo invalidates via a query param
       "cache-control": "private, max-age=120",
     },
   });

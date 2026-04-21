@@ -8,7 +8,7 @@ import { InitialsAvatar } from "./avatar";
  * Avatar that tries to load the Dilly profile photo and falls back to initials
  * when it 404s. Used in the nav and on the /profile page.
  *
- * `bust` is an optional cache-busting token — pass something that changes
+ * `bust` is an optional cache-busting token - pass something that changes
  * when the user uploads a new photo (e.g. last-updated timestamp).
  */
 export function PhotoAvatar({

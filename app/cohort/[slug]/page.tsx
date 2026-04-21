@@ -113,7 +113,7 @@ export default async function CohortPage({
         </div>
       ) : (
         <>
-          {/* ═══ Path commitment — the "start here" commitment device ═══ */}
+          {/* ═══ Path commitment - the "start here" commitment device ═══ */}
           {hero && (
             <section className="container-app pt-8">
               <div className="rounded-2xl border border-[color:var(--color-border)] bg-white p-5 sm:p-6">
@@ -168,7 +168,7 @@ export default async function CohortPage({
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   The hero pick — a huge playable cover card. Same visual language as
+   The hero pick - a huge playable cover card. Same visual language as
    the Today panel so the interface feels consistent across pages.
    ═══════════════════════════════════════════════════════════════════ */
 function HeroPick({ video }: { video: Video }) {
@@ -214,7 +214,7 @@ function HeroPick({ video }: { video: Video }) {
   );
 }
 
-/* Four numbered follow-ups — tight, one-line rows, no extra ornament. */
+/* Four numbered follow-ups - tight, one-line rows, no extra ornament. */
 function NextUpList({
   videos,
   start,
@@ -272,7 +272,7 @@ function NextUpList({
   );
 }
 
-/* One consolidated filter row — clear labels, no buttons competing for attention. */
+/* One consolidated filter row - clear labels, no buttons competing for attention. */
 function FilterBar({
   slug, sort, maxDurationMin, lang,
 }: {

@@ -101,7 +101,7 @@ export default async function IndustryPage({
         </ol>
       </section>
 
-      {/* ── Library — videos curated for this role ───────────────────────── */}
+      {/* ── Library - videos curated for this role ───────────────────────── */}
       <section className="container-app pt-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-3xl">

@@ -8,7 +8,7 @@ import { cohortHex } from "@/lib/cohort-colors";
 import type { Video } from "@/lib/types";
 
 /**
- * Header command palette — the power-tool search. Does five things:
+ * Header command palette - the power-tool search. Does five things:
  *
  *   1. Live video search via GET /skill-lab/ask?q=...  (Postgres FTS, no LLM)
  *   2. Fuzzy-matches cohorts, industries, and in-app actions locally
@@ -320,7 +320,7 @@ function CommandModal({
             ref={inputRef}
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search videos, roles, fields — or ask anything."
+            placeholder="Search videos, roles, fields - or ask anything."
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"

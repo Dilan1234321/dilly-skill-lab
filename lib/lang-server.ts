@@ -1,4 +1,4 @@
-// Server-only language helper. Language switching is temporarily disabled —
+// Server-only language helper. Language switching is temporarily disabled -
 // every request is treated as English. The i18n dictionary and cookie wiring
 // are kept intact so we can re-enable the picker later without a migration.
 

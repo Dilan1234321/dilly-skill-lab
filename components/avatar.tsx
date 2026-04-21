@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Avatar — shows the Dilly profile photo if one exists, else initials
+ * Avatar - shows the Dilly profile photo if one exists, else initials
  * on a deterministic gradient (same email always lands on the same gradient).
  *
  * The server has no way to know if a photo exists without an extra round-trip,

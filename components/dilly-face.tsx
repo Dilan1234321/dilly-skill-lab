@@ -1,4 +1,4 @@
-// The Dilly smiley — the same face that lives inside the "i" in the dilly
+// The Dilly smiley - the same face that lives inside the "i" in the dilly
 // wordmark. Kept as a pure SVG component so it scales crisply and we don't
 // pull another asset into /public.
 

@@ -26,7 +26,7 @@ export function WatchedOverlay({ videoId }: { videoId: string }) {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-white/45"
       />
-      {/* The check badge — navy pill with a white check */}
+      {/* The check badge - navy pill with a white check */}
       <span
         aria-label="Watched"
         title="You've watched this"

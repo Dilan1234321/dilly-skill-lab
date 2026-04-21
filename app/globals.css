@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Skill Lab design system — aligned with hellodilly.com (light theme).
+   Skill Lab design system - aligned with hellodilly.com (light theme).
    Warm cream background, deep navy for type and buttons, soft lavender for
    secondary chips, green/amber for semantic status. Editorial serif for
    headlines, sans for UI chrome.
    ────────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* Warm cream base — not pure white, has a slight ochre cast */
+  /* Warm cream base - not pure white, has a slight ochre cast */
   --color-bg: #f4f1ea;
   --color-bg-soft: #ece8df;
   --color-surface: #ffffff;
@@ -27,7 +27,7 @@
   --color-lavender: #e5e5f5;         /* soft tag background */
   --color-lavender-border: #cfd0e8;
 
-  /* Semantic status colors — for the cohort/profile strength chips */
+  /* Semantic status colors - for the cohort/profile strength chips */
   --color-green: #4c9a5a;
   --color-green-bg: #e2f0e4;
   --color-amber: #c88a2b;
@@ -35,7 +35,7 @@
   --color-red: #c24a4a;
   --color-red-bg: #f5dada;
 
-  /* Satoshi — the rounded geometric sans hellodilly.com uses. Both headlines
+  /* Satoshi - the rounded geometric sans hellodilly.com uses. Both headlines
      and body now share this face so the brand feel is consistent everywhere;
      "editorial" moments just shift to a heavier weight. */
   --font-display: "Satoshi", ui-sans-serif, system-ui, sans-serif;
@@ -80,7 +80,7 @@ body {
 }
 @media (min-width: 768px) { .container-narrow { padding-inline: 2rem; } }
 
-/* Glass nav — cream with light blur so content reads through subtly */
+/* Glass nav - cream with light blur so content reads through subtly */
 .glass {
   background: rgba(244, 241, 234, 0.88);
   backdrop-filter: saturate(150%) blur(10px);
@@ -115,7 +115,7 @@ body {
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
-/* Buttons — navy primary, subtle ghost */
+/* Buttons - navy primary, subtle ghost */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -146,7 +146,7 @@ body {
   color: var(--color-accent);
 }
 
-/* Chips — soft lavender, like the hellodilly feature tags */
+/* Chips - soft lavender, like the hellodilly feature tags */
 .chip {
   display: inline-flex;
   align-items: center;
@@ -186,7 +186,7 @@ body {
   margin-block: 2.5rem;
 }
 
-/* Numbered step indicator — navy circle, cream background */
+/* Numbered step indicator - navy circle, cream background */
 .step-number {
   width: 1.9rem;
   height: 1.9rem;
@@ -217,7 +217,7 @@ body {
   margin-right: 0.2rem;
 }
 
-/* Scrollbar — warm, visible only on hover */
+/* Scrollbar - warm, visible only on hover */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 999px; }
@@ -231,7 +231,7 @@ body {
 }
 
 /* Kill browser autofill's black/yellow background inside any Dilly input.
-   Chrome/Safari drop a dark box behind autofilled text — this holds the
+   Chrome/Safari drop a dark box behind autofilled text - this holds the
    surface color instead and keeps the type in the normal color. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -284,7 +284,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Page transitions — soft editorial fade + lift on every route change.
+   Page transitions - soft editorial fade + lift on every route change.
    Driven by <PageTransition> keying on pathname so the keyframe replays on
    each navigation.
    ────────────────────────────────────────────────────────────────────────── */

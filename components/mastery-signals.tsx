@@ -3,7 +3,7 @@ import { COHORTS_BY_NAME } from "@/lib/cohorts";
 import type { ReceiptCohort } from "@/lib/receipts";
 
 /**
- * Mastery Signals — Dilly Skills' answer to the LinkedIn skill tag.
+ * Mastery Signals - Dilly Skills' answer to the LinkedIn skill tag.
  * Every cohort the user has touched shows as a chip with its receipt
  * weight: total minutes + videos engaged. At three thresholds we add
  * a tier label: Exploring → Building → Developing → Fluent.
@@ -28,7 +28,7 @@ export function MasterySignals({ cohorts }: { cohorts: ReceiptCohort[] }) {
   if (cohorts.length === 0) {
     return (
       <div className="rounded-lg border border-dashed border-[color:var(--color-border-strong)] p-5 text-sm text-[color:var(--color-muted)]">
-        No receipts yet. Watch a video and share a one-sentence takeaway — your
+        No receipts yet. Watch a video and share a one-sentence takeaway - your
         signal will appear here.
       </div>
     );

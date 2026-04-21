@@ -22,7 +22,7 @@ import type { ReactNode } from "react";
  *
  * Out-animation caveat: we can't hold the outgoing frame in an SPA without
  * a renderer like framer-motion's AnimatePresence. The fade-in happens
- * quickly enough that the transition still reads as smooth — and we match
+ * quickly enough that the transition still reads as smooth - and we match
  * it with a 60ms delay so the incoming page doesn't pop before the router
  * has actually swapped the tree.
  */
