@@ -94,6 +94,18 @@ async function handleVerify(formData: FormData) {
   // A profile with a name on file means they've done onboarding before
   // (in the mobile app, dashboard, or a previous Dilly Skills signup).
   const profile = await getProfile().catch(() => null);
+
+  // Persist user_type onto the profile so Dilly's URL rule routes this
+  // account to the correct public profile page (/s/{slug} vs /p/{slug}).
+  // Dilly treats unset user_type as "student" — that's wrong for people
+  // who picked "Anyone else" at step 1. Only PATCH when the field is
+  // empty so we never overwrite an existing setting from the mobile app.
+  const existingType = (profile?.user_type as string | undefined)?.trim();
+  if (!existingType) {
+    const chosen = ut === "s" ? "student" : "general";
+    await patchProfile({ user_type: chosen }).catch(() => null);
+  }
+
   const hasName = Boolean(
     (profile?.full_name as string | undefined)?.trim() ||
       (profile?.name as string | undefined)?.trim() ||
