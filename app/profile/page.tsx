@@ -8,6 +8,7 @@ import { PhotoUpload } from "@/components/photo-upload";
 import { TaglineEditor } from "@/components/tagline-editor";
 import { LearningTrail } from "@/components/learning-trail";
 import { MasterySignals } from "@/components/mastery-signals";
+import { ShareProfileChip } from "@/components/share-profile-chip";
 
 export const metadata = {
   title: "Your profile · Dilly Skills",
@@ -62,14 +63,16 @@ export default async function ProfilePage() {
   const linkedin = s(profile, "linkedin_url");
   const readableSlug = s(profile, "readable_slug");
 
-  // The public profile URL depends on user_type. Students live at /s/{slug},
-  // everyone else at /p/{slug}. Matches projects/dilly/website/src/app/*.
-  const userType = s(profile, "user_type") || "";
-  const publicProfileUrl = readableSlug
-    ? `https://hellodilly.com/${userType === "student" ? "s" : "p"}/${readableSlug}`
-    : null;
+  // Public Skill Lab profile lives at /u/{slug} on the same domain. Dilly's
+  // recruiter-facing profile (hellodilly.com/s/... or /p/...) is a different
+  // product and we don't link to it from Skill Lab until that's launched.
+  const siteBase =
+    (process.env.NEXT_PUBLIC_SITE_URL ?? "https://dilly-skill-lab.vercel.app")
+      .replace(/^https?:\/\//, "")
+      .replace(/\/$/, "");
+  const publicProfileUrl = readableSlug ? `/u/${readableSlug}` : null;
   const publicProfileLabel = readableSlug
-    ? `hellodilly.com/${userType === "student" ? "s" : "p"}/${readableSlug}`
+    ? `${siteBase}/u/${readableSlug}`
     : null;
 
   const majors = arr(profile, "majors");
@@ -142,6 +145,9 @@ export default async function ProfilePage() {
             <TaglineEditor initial={tagline} />
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2">
+            {readableSlug && (
+              <ShareProfileChip slug={readableSlug} />
+            )}
             {publicProfileUrl && publicProfileLabel && (
               <a
                 href={publicProfileUrl}

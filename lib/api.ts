@@ -71,6 +71,27 @@ export async function listPopulatedCohorts(): Promise<
   return data?.cohorts ?? [];
 }
 
+export type PublicProfile = {
+  name: string;
+  first_name: string;
+  slug: string;
+  school: string | null;
+  majors: string[];
+  tagline: string | null;
+  total_seconds: number;
+  videos_engaged: number;
+  cohorts_touched: number;
+  articulations: number;
+  by_cohort: { cohort: string; seconds: number; videos: number }[];
+};
+
+export async function getPublicProfile(slug: string): Promise<PublicProfile | null> {
+  const data = await api<PublicProfile>(
+    `/skill-lab/public/${encodeURIComponent(slug)}`,
+  );
+  return data ?? null;
+}
+
 export type AskResult = {
   videos: Video[];
   cohorts: { cohort: string; score: number }[];
