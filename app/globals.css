@@ -282,3 +282,33 @@ input[type="search"]::-webkit-search-results-decoration {
 @media (prefers-reduced-motion: reduce) {
   .palette-overlay[data-state], .palette-card[data-state] { animation: none !important; }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Page transitions — soft editorial fade + lift on every route change.
+   Driven by <PageTransition> keying on pathname so the keyframe replays on
+   each navigation.
+   ────────────────────────────────────────────────────────────────────────── */
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+.page-enter {
+  animation: page-enter 360ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  /* Promote to its own layer so the incoming frame composites cleanly
+     without jank against nav / footer. */
+  will-change: opacity, transform, filter;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter { animation: none !important; }
+}

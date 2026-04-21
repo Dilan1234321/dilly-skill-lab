@@ -3,6 +3,7 @@ import "./globals.css";
 import { Nav } from "@/components/nav";
 import { ShortcutsHelp } from "@/components/shortcuts-help";
 import { ShortcutTip } from "@/components/shortcut-tip";
+import { PageTransition } from "@/components/page-transition";
 import { getProfile, getSession } from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import { getStreak } from "@/lib/session-state";
@@ -54,7 +55,9 @@ export default async function RootLayout({
         />
         <ShortcutsHelp />
         <ShortcutTip />
-        <main>{children}</main>
+        <main>
+          <PageTransition>{children}</PageTransition>
+        </main>
         <footer className="container-app mt-24 border-t border-[color:var(--color-border)] py-10 text-sm text-[color:var(--color-muted)]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
