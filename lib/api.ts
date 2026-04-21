@@ -62,6 +62,17 @@ export async function getVideo(id: string): Promise<Video | null> {
   return data?.video ?? null;
 }
 
+export type AskResult = {
+  videos: Video[];
+  cohorts: { cohort: string; score: number }[];
+};
+
+export async function askSkills(q: string, limit = 12): Promise<AskResult> {
+  const params = new URLSearchParams({ q, limit: String(limit) });
+  const data = await api<AskResult>(`/skill-lab/ask?${params.toString()}`);
+  return data ?? { videos: [], cohorts: [] };
+}
+
 export async function listTrending(limit = 12, lang?: string): Promise<Video[]> {
   const params = new URLSearchParams({ limit: String(limit) });
   if (lang) params.set("lang", lang);

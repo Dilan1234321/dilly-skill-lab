@@ -49,6 +49,9 @@ export function Nav({
             <StreakChip streak={streak} />
             <TimeInvestedChip />
           </div>
+          <Link href="/ask" className="hidden px-2 py-1 text-sm font-semibold text-[color:var(--color-accent)] hover:opacity-80 lg:inline">
+            Ask
+          </Link>
           <Link href="/browse" className="hidden px-2 py-1 text-sm text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)] lg:inline">
             Browse
           </Link>
