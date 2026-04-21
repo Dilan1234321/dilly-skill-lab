@@ -15,12 +15,14 @@ export function TodayPanel({
   lastWatched,
   fresh,
   session,
+  resume = false,
 }: {
   video: Video | null;
   streak: StreakState;
   lastWatched: LastWatched | null;
   fresh: number;          // count of videos added in last 72h
   session: SessionUser | null;
+  resume?: boolean;       // true when the hero IS the user's last-watched video
 }) {
   if (!video) return null;
 
@@ -50,8 +52,10 @@ export function TodayPanel({
               </span>
             </div>
             <div className="absolute left-4 top-4 flex gap-2">
-              <span className="chip chip-accent backdrop-blur">Today&apos;s pick</span>
-              {video.quality_score >= 85 && (
+              <span className="chip chip-accent backdrop-blur">
+                {resume ? "Resume where you left off" : "Today's pick"}
+              </span>
+              {video.quality_score >= 85 && !resume && (
                 <span className="chip chip-mint backdrop-blur">High signal</span>
               )}
             </div>
@@ -104,7 +108,9 @@ export function TodayPanel({
             <Stat label="Fields" value="22" />
           </div>
 
-          {lastWatched && (
+          {/* Only show the cohort quick-link when the hero is NOT already the
+              last-watched video — otherwise it's redundant. */}
+          {lastWatched && !resume && (
             <Link
               href={`/cohort/${lastWatched.cohort}`}
               className="block rounded-xl border border-[color:var(--color-border)] p-3.5 text-sm transition hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface)]"

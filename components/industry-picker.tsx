@@ -1,14 +1,34 @@
 import Link from "next/link";
 import { INDUSTRIES } from "@/lib/industries";
+import { listPopulatedCohorts } from "@/lib/api";
 
 /**
- * Industry picker — Dilly Skills's primary "start here" choice for working adults.
- * Pitch: pick what you do, we'll show you what to learn so AI doesn't take it.
+ * Industry picker. Each industry maps to a handful of cohorts; we only
+ * render industries where at least one mapped cohort has videos, so the
+ * browse surface never sends users into a dead end.
  */
-export function IndustryPicker() {
+export async function IndustryPicker() {
+  const populated = await listPopulatedCohorts().catch(() => []);
+  const populatedSlugs =
+    populated.length > 0 ? new Set(populated.map((p) => p.slug)) : null;
+
+  const visible = populatedSlugs
+    ? INDUSTRIES.filter((i) =>
+        (i.cohort_slugs ?? []).some((s) => populatedSlugs.has(s)),
+      )
+    : INDUSTRIES;
+
+  if (visible.length === 0) {
+    return (
+      <div className="card p-8 text-center text-sm text-[color:var(--color-muted)]">
+        Role picker opens up as more cohorts fill in.
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-      {INDUSTRIES.map((i) => (
+      {visible.map((i) => (
         <Link
           key={i.slug}
           href={`/industry/${i.slug}`}

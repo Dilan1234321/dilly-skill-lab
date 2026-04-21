@@ -1,16 +1,35 @@
 import Link from "next/link";
 import { COHORTS } from "@/lib/cohorts";
 import type { LangCode } from "@/lib/i18n";
+import { listPopulatedCohorts } from "@/lib/api";
 
 /**
- * Index-style cohort list — intentionally not a thumbnail grid. This is
- * about the fields, not videos. Clean rows on mobile, 3-col index on desktop.
+ * Index-style cohort list. Only shows cohorts that actually have videos
+ * in the library — empty cohorts stay hidden until the next ingest fills
+ * them. Fetched server-side; silently falls back to the full list if the
+ * /cohorts/populated endpoint is unavailable.
  */
-export function CohortGrid({ lang }: { lang: LangCode }) {
+export async function CohortGrid({ lang }: { lang: LangCode }) {
   void lang;
+
+  const populated = await listPopulatedCohorts().catch(() => []);
+  const populatedSlugs =
+    populated.length > 0 ? new Set(populated.map((p) => p.slug)) : null;
+  const visible = populatedSlugs
+    ? COHORTS.filter((c) => populatedSlugs.has(c.slug))
+    : COHORTS;
+
+  if (visible.length === 0) {
+    return (
+      <div className="card p-8 text-center text-sm text-[color:var(--color-muted)]">
+        Cohorts fill in as the nightly ingest runs. Come back soon.
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-border)] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {COHORTS.map((c) => (
+      {visible.map((c) => (
         <Link
           key={c.slug}
           href={`/cohort/${c.slug}`}

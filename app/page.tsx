@@ -2,7 +2,13 @@ import Link from "next/link";
 import { TodayPanel } from "@/components/today-panel";
 import { EditorialPaths } from "@/components/editorial-paths";
 import { Reveal } from "@/components/reveal";
-import { getProfile, getSession, listTrending, listVideosByCohort } from "@/lib/api";
+import {
+  getProfile,
+  getSession,
+  getVideo,
+  listTrending,
+  listVideosByCohort,
+} from "@/lib/api";
 import { getLang } from "@/lib/lang-server";
 import {
   getStreak,
@@ -25,16 +31,36 @@ export default async function HomePage() {
   const profile = session ? await getProfile().catch(() => null) : null;
   const firstName = firstNameFrom(profile, session?.email);
 
-  const todaySources = lastWatched
+  // The hero video is, in order of preference:
+  //   1. The video the user was actively watching (resumes from localStorage
+  //      position on the video page)
+  //   2. The top video in their last-watched cohort (so it still feels personal)
+  //   3. Trending across the whole library
+  //   4. A final fallback to the default cohort so the page always renders
+  const resumeVideo = lastWatched
+    ? await getVideo(lastWatched.id).catch(() => null)
+    : null;
+
+  const cohortTop = lastWatched
     ? await listVideosByCohort(lastWatched.cohort, { limit: 8, sort: "best", lang }).catch(() => [])
-    : await listTrending(8, lang).catch(() => []);
-  const todayVideo =
+    : [];
+  const trendingTop =
+    cohortTop.length === 0
+      ? await listTrending(8, lang).catch(() => [])
+      : [];
+
+  const todaySources = cohortTop.length > 0 ? cohortTop : trendingTop;
+
+  const nonResumePick =
     todaySources.find((v) => v.id !== lastWatched?.id) ?? todaySources[0] ?? null;
 
-  const fallback = !todayVideo
-    ? await listVideosByCohort(DEFAULT_COHORT, { limit: 1, sort: "best", lang }).catch(() => [])
-    : [];
-  const pick = todayVideo ?? fallback[0] ?? null;
+  const fallback =
+    !resumeVideo && !nonResumePick
+      ? await listVideosByCohort(DEFAULT_COHORT, { limit: 1, sort: "best", lang }).catch(() => [])
+      : [];
+
+  const pick = resumeVideo ?? nonResumePick ?? fallback[0] ?? null;
+  const isResume = Boolean(resumeVideo && pick && pick.id === resumeVideo.id);
 
   const freshCount = todaySources.filter((v) => {
     const ts = new Date(v.published_at).getTime();
@@ -61,6 +87,7 @@ export default async function HomePage() {
           lastWatched={lastWatched}
           fresh={freshCount}
           session={session}
+          resume={isResume}
         />
       ) : (
         <FirstRunHero firstVisit={firstVisit} />

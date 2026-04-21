@@ -62,6 +62,15 @@ export async function getVideo(id: string): Promise<Video | null> {
   return data?.video ?? null;
 }
 
+export async function listPopulatedCohorts(): Promise<
+  { slug: string; name: string; count: number }[]
+> {
+  const data = await api<{
+    cohorts: { slug: string; name: string; count: number }[];
+  }>(`/skill-lab/cohorts/populated`);
+  return data?.cohorts ?? [];
+}
+
 export type AskResult = {
   videos: Video[];
   cohorts: { cohort: string; score: number }[];
