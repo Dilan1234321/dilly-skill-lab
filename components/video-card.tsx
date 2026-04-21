@@ -3,6 +3,7 @@ import type { Video } from "@/lib/types";
 import type { LangCode } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
 import { formatDuration, timeAgo } from "@/lib/utils";
+import { WatchedOverlay } from "./watched-overlay";
 
 const FRESH_MS = 72 * 60 * 60 * 1000;
 
@@ -29,11 +30,11 @@ export function VideoCard({ video, lang }: { video: Video; lang: LangCode }) {
           className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
         />
         {video.duration_sec > 0 && (
-          <span className="absolute bottom-2 right-2 rounded-md bg-black/80 px-1.5 py-0.5 text-xs font-medium backdrop-blur-sm">
+          <span className="absolute bottom-2 right-2 z-10 rounded-md bg-black/80 px-1.5 py-0.5 text-xs font-medium backdrop-blur-sm">
             {formatDuration(video.duration_sec)}
           </span>
         )}
-        <div className="absolute left-2 top-2 flex gap-1">
+        <div className="absolute left-2 top-2 z-10 flex gap-1">
           {fresh && (
             <span className="chip chip-mint backdrop-blur">
               <span className="h-1 w-1 animate-pulse rounded-full bg-[color:var(--color-mint)]" />
@@ -46,6 +47,7 @@ export function VideoCard({ video, lang }: { video: Video; lang: LangCode }) {
             </span>
           )}
         </div>
+        <WatchedOverlay videoId={video.id} />
       </div>
       <div className="p-4">
         <div className="line-clamp-2 text-[0.95rem] font-semibold leading-snug text-[color:var(--color-text)]">

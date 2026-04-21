@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Video } from "@/lib/types";
 import type { StreakState, LastWatched } from "@/lib/session-state";
 import type { SessionUser } from "@/lib/types";
+import type { ReceiptsSummary } from "@/lib/receipts";
 import { formatDuration } from "@/lib/utils";
 
 /**
@@ -16,6 +17,7 @@ export function TodayPanel({
   fresh,
   session,
   resume = false,
+  receipts = null,
 }: {
   video: Video | null;
   streak: StreakState;
@@ -23,6 +25,7 @@ export function TodayPanel({
   fresh: number;          // count of videos added in last 72h
   session: SessionUser | null;
   resume?: boolean;       // true when the hero IS the user's last-watched video
+  receipts?: ReceiptsSummary | null;
 }) {
   if (!video) return null;
 
@@ -98,15 +101,12 @@ export function TodayPanel({
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <Stat label="Streak" value={streak.streak ? `${streak.streak}d` : "—"} hot={streak.streak >= 3} />
-            <Stat
-              label="Fresh today"
-              value={fresh > 0 ? `${fresh} new` : "—"}
-              hot={fresh > 0}
-            />
-            <Stat label="Fields" value="22" />
-          </div>
+          <LiveStats
+            streak={streak.streak}
+            fresh={fresh}
+            session={session}
+            receipts={receipts}
+          />
 
           {/* Only show the cohort quick-link when the hero is NOT already the
               last-watched video — otherwise it's redundant. */}
@@ -162,6 +162,83 @@ function ProgressLockNudge({ streak }: { streak: number }) {
       </div>
     </Link>
   );
+}
+
+/**
+ * Stat strip. For signed-in users with receipts this reads identity-forward:
+ * "Xh this month · N videos · N fields." For anonymous visitors or users
+ * with no receipts yet, falls back to the generic streak/fresh/fields row.
+ *
+ * The copy change is the whole point — the moment the user has *any*
+ * receipt, the product stops looking like a content browser and starts
+ * looking like their learning log.
+ */
+function LiveStats({
+  streak,
+  fresh,
+  session,
+  receipts,
+}: {
+  streak: number;
+  fresh: number;
+  session: SessionUser | null;
+  receipts: ReceiptsSummary | null;
+}) {
+  const hasReceipts =
+    session && receipts && receipts.total_seconds > 0;
+
+  if (hasReceipts) {
+    const monthSec = (receipts.daily ?? [])
+      .filter((d) => withinThisMonth(d.day))
+      .reduce((s, d) => s + d.seconds, 0);
+    const monthLabel =
+      monthSec >= 3600
+        ? `${(monthSec / 3600).toFixed(monthSec >= 36000 ? 0 : 1)}h`
+        : `${Math.max(0, Math.round(monthSec / 60))}m`;
+
+    return (
+      <div className="grid grid-cols-3 gap-3">
+        <Stat
+          label="This month"
+          value={monthLabel}
+          hot={monthSec > 0}
+        />
+        <Stat
+          label="Videos"
+          value={String(receipts.videos_engaged)}
+          hot={receipts.videos_engaged >= 3}
+        />
+        <Stat
+          label="Streak"
+          value={streak ? `${streak}d` : "—"}
+          hot={streak >= 3}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <Stat
+        label="Streak"
+        value={streak ? `${streak}d` : "—"}
+        hot={streak >= 3}
+      />
+      <Stat
+        label="Fresh today"
+        value={fresh > 0 ? `${fresh} new` : "—"}
+        hot={fresh > 0}
+      />
+      <Stat label="Fields" value="22" />
+    </div>
+  );
+}
+
+function withinThisMonth(isoDay: string): boolean {
+  // isoDay is YYYY-MM-DD; compare with today's YYYY-MM prefix
+  const now = new Date();
+  const prefix = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
+  return isoDay.startsWith(prefix);
 }
 
 function Stat({

@@ -8,6 +8,7 @@ import {
   setResumePosition,
   clearResumePosition,
 } from "@/lib/progress-client";
+import { activePathForVideo, markStepComplete } from "@/lib/paths-client";
 import { NextVideoBreak } from "./next-video-break";
 
 type YTPlayer = {
@@ -161,6 +162,9 @@ export function VideoPlayer({
         sinceLastReceipt += 15;
         if (!markedWatched && elapsed >= 30) {
           markWatched(videoId, elapsed);
+          // If this video is part of an active path, tick the step too.
+          const pathCohort = activePathForVideo(videoId);
+          if (pathCohort) markStepComplete(pathCohort, videoId);
           markedWatched = true;
         }
         // Flush a receipt beacon every 60s of engaged time. Fire-and-forget —

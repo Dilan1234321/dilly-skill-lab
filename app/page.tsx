@@ -9,6 +9,7 @@ import {
   listTrending,
   listVideosByCohort,
 } from "@/lib/api";
+import { getMyReceipts } from "@/lib/receipts";
 import { getLang } from "@/lib/lang-server";
 import {
   getStreak,
@@ -27,8 +28,13 @@ export default async function HomePage() {
     isFirstVisit(),
     getSession().catch(() => null),
   ]);
-  // Only fetch profile when signed in — anonymous visits stay cheap.
-  const profile = session ? await getProfile().catch(() => null) : null;
+  // Only fetch profile + receipts when signed in — anonymous visits stay cheap.
+  const [profile, receipts] = session
+    ? await Promise.all([
+        getProfile().catch(() => null),
+        getMyReceipts().catch(() => null),
+      ])
+    : [null, null];
   const firstName = firstNameFrom(profile, session?.email);
 
   // Populated cohort names drive the "library, today" index
@@ -95,6 +101,7 @@ export default async function HomePage() {
           fresh={freshCount}
           session={session}
           resume={isResume}
+          receipts={receipts}
         />
       ) : (
         <FirstRunHero firstVisit={firstVisit} />

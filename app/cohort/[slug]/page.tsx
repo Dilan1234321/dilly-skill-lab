@@ -9,6 +9,8 @@ import { formatDuration } from "@/lib/utils";
 import type { Video } from "@/lib/types";
 import { cohortHex, hexWithAlpha } from "@/lib/cohort-colors";
 import { Reveal } from "@/components/reveal";
+import { PathCommit } from "@/components/path-commit";
+import { PathStepDot } from "@/components/path-step-dot";
 
 type SortKey = "best" | "newest";
 
@@ -111,11 +113,27 @@ export default async function CohortPage({
         </div>
       ) : (
         <>
+          {/* ═══ Path commitment — the "start here" commitment device ═══ */}
+          {hero && (
+            <section className="container-app pt-8">
+              <div className="rounded-2xl border border-[color:var(--color-border)] bg-white p-5 sm:p-6">
+                <PathCommit
+                  cohortSlug={slug}
+                  cohortName={cohort.name}
+                  videoIds={[hero.id, ...nextUp.map((v) => v.id)]}
+                  firstVideoId={hero.id}
+                />
+              </div>
+            </section>
+          )}
+
           {/* ═══ One hero pick + numbered next-4 ═══ */}
-          <Reveal as="section" className="container-app pt-8 sm:pt-10">
+          <Reveal as="section" className="container-app pt-6 sm:pt-8">
             <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:gap-10">
               {hero && <HeroPick video={hero} />}
-              {nextUp.length > 0 && <NextUpList videos={nextUp} start={2} />}
+              {nextUp.length > 0 && (
+                <NextUpList videos={nextUp} start={2} cohortSlug={slug} />
+              )}
             </div>
           </Reveal>
 
@@ -197,7 +215,15 @@ function HeroPick({ video }: { video: Video }) {
 }
 
 /* Four numbered follow-ups — tight, one-line rows, no extra ornament. */
-function NextUpList({ videos, start }: { videos: Video[]; start: number }) {
+function NextUpList({
+  videos,
+  start,
+  cohortSlug,
+}: {
+  videos: Video[];
+  start: number;
+  cohortSlug?: string;
+}) {
   return (
     <div className="flex flex-col">
       <div className="mb-3 flex items-end justify-between">
@@ -213,7 +239,18 @@ function NextUpList({ videos, start }: { videos: Video[]; start: number }) {
               href={`/video/${v.id}`}
               className="group flex items-start gap-3 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-3 transition hover:border-[color:var(--color-border-strong)] hover:bg-[color:var(--color-surface-raised)]"
             >
+              {/* Default step bubble for un-committed viewers; the client
+                  dot overlays/replaces this once a path is started. */}
               <span className="step-number mt-0.5">{start + i}</span>
+              {cohortSlug && (
+                <span className="-ml-[1.9rem] mt-0.5">
+                  <PathStepDot
+                    cohortSlug={cohortSlug}
+                    videoId={v.id}
+                    stepNumber={start + i}
+                  />
+                </span>
+              )}
               <div className="min-w-0 flex-1">
                 <div className="line-clamp-1 text-sm font-semibold text-[color:var(--color-text)]">
                   {v.title}
