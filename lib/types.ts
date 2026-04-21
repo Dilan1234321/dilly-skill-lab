@@ -14,6 +14,8 @@ export type Video = {
   thumbnail_url: string;
   description: string | null;
   language: string;          // ISO 639-1, e.g. 'en'
+  summary?: string | null;           // bulleted summary, one "- " per line
+  summary_source?: "chapters" | "ai" | null;
 };
 
 export type SavedVideo = Video & {

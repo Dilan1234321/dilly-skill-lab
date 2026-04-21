@@ -9,6 +9,7 @@ import { t } from "@/lib/i18n";
 import { formatDuration, timeAgo } from "@/lib/utils";
 import { VideoPlayer } from "@/components/video-player";
 import { ArticulationPrompt } from "@/components/articulation-prompt";
+import { WhatYoullLearn } from "@/components/what-youll-learn";
 
 export default async function VideoPage({
   params,
@@ -105,6 +106,8 @@ export default async function VideoPage({
                 </Link>
               )}
             </div>
+
+            <WhatYoullLearn video={video} />
 
             {video.description && (
               <details className="mt-6 text-sm text-[color:var(--color-muted)]">
