@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { TodayPanel } from "@/components/today-panel";
-import { EditorialPaths } from "@/components/editorial-paths";
+import { LearnAnything } from "@/components/learn-anything";
 import { Reveal } from "@/components/reveal";
 import {
   getProfile,
   getSession,
   getVideo,
+  listPopulatedCohorts,
   listTrending,
   listVideosByCohort,
 } from "@/lib/api";
@@ -30,6 +30,13 @@ export default async function HomePage() {
   // Only fetch profile when signed in — anonymous visits stay cheap.
   const profile = session ? await getProfile().catch(() => null) : null;
   const firstName = firstNameFrom(profile, session?.email);
+
+  // Populated cohort names drive the "library, today" index
+  const populatedCohorts = await listPopulatedCohorts().catch(() => []);
+  const populatedNames = populatedCohorts
+    .slice()
+    .sort((a, b) => b.count - a.count)
+    .map((c) => c.name);
 
   // The hero video is, in order of preference:
   //   1. The video the user was actively watching (resumes from localStorage
@@ -93,25 +100,9 @@ export default async function HomePage() {
         <FirstRunHero firstVisit={firstVisit} />
       )}
 
-      {/* ═══ Three editorial paths — the curator's pick ═══ */}
-      <Reveal as="section" className="container-app pt-20 sm:pt-28">
-        <div className="flex items-end justify-between gap-4 border-b border-[color:var(--color-border)] pb-6">
-          <div>
-            <div className="eyebrow">Start somewhere</div>
-            <h2 className="editorial mt-2 text-2xl tracking-tight sm:text-3xl">
-              Three places to begin.
-            </h2>
-          </div>
-          <Link
-            href="/browse"
-            className="text-xs font-semibold uppercase tracking-wider text-[color:var(--color-muted)] hover:text-[color:var(--color-accent)]"
-          >
-            All roles & fields →
-          </Link>
-        </div>
-        <div className="mt-8">
-          <EditorialPaths />
-        </div>
+      {/* ═══ Universal "anyone can learn anything" block ═══ */}
+      <Reveal as="section">
+        <LearnAnything populatedNames={populatedNames} />
       </Reveal>
     </div>
   );
