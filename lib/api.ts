@@ -83,6 +83,13 @@ export type PublicProfile = {
   cohorts_touched: number;
   articulations: number;
   by_cohort: { cohort: string; seconds: number; videos: number }[];
+  career: {
+    url: string;
+    career_goal: string | null;
+    application_target: string | null;
+    industry_target: string | null;
+    goals: string[];
+  } | null;
 };
 
 export async function getPublicProfile(slug: string): Promise<PublicProfile | null> {

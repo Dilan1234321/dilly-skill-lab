@@ -83,6 +83,18 @@ export default async function PublicProfilePage({
                   {profile.tagline}
                 </p>
               )}
+              {profile.career && (
+                <a
+                  href={profile.career.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--color-border)] bg-white px-3.5 py-1.5 text-xs font-semibold text-[color:var(--color-accent)] transition hover:border-[color:var(--color-accent)] hover:bg-[color:var(--color-lavender)]"
+                >
+                  <span aria-hidden>💼</span>
+                  Career profile on Dilly
+                  <span aria-hidden>↗</span>
+                </a>
+              )}
             </div>
 
             {/* Hero stats block */}
@@ -95,6 +107,57 @@ export default async function PublicProfilePage({
           </div>
         </div>
       </section>
+
+      {/* ── Career context: why they're learning what they are ────────── */}
+      {profile.career &&
+        (profile.career.career_goal ||
+          profile.career.application_target ||
+          profile.career.industry_target ||
+          profile.career.goals.length > 0) && (
+          <section className="container-app pt-10 sm:pt-14">
+            <div className="rounded-2xl border border-[color:var(--color-border)] bg-white p-5 sm:p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div className="eyebrow">Why they&apos;re learning this</div>
+                <a
+                  href={profile.career.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="text-[0.65rem] font-semibold uppercase tracking-wider text-[color:var(--color-muted)] transition hover:text-[color:var(--color-accent)]"
+                >
+                  Full career profile ↗
+                </a>
+              </div>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                {profile.career.application_target && (
+                  <CareerFact
+                    label="Aiming for"
+                    value={profile.career.application_target}
+                  />
+                )}
+                {profile.career.industry_target && (
+                  <CareerFact
+                    label="Industry"
+                    value={profile.career.industry_target}
+                  />
+                )}
+                {profile.career.career_goal && (
+                  <CareerFact
+                    label="Career goal"
+                    value={profile.career.career_goal}
+                    wide
+                  />
+                )}
+                {profile.career.goals.length > 0 && (
+                  <CareerFact
+                    label="Short-term goals"
+                    value={profile.career.goals.join(" · ")}
+                    wide
+                  />
+                )}
+              </div>
+            </div>
+          </section>
+        )}
 
       {profile.by_cohort.length > 0 ? (
         <>
@@ -172,6 +235,27 @@ export default async function PublicProfilePage({
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function CareerFact({
+  label,
+  value,
+  wide = false,
+}: {
+  label: string;
+  value: string;
+  wide?: boolean;
+}) {
+  return (
+    <div className={wide ? "sm:col-span-2" : undefined}>
+      <div className="text-[0.65rem] uppercase tracking-wider text-[color:var(--color-dim)]">
+        {label}
+      </div>
+      <div className="mt-1 text-[0.95rem] text-[color:var(--color-text)]">
+        {value}
+      </div>
     </div>
   );
 }

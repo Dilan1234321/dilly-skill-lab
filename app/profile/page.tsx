@@ -9,6 +9,7 @@ import { TaglineEditor } from "@/components/tagline-editor";
 import { LearningTrail } from "@/components/learning-trail";
 import { MasterySignals } from "@/components/mastery-signals";
 import { ShareProfileChip } from "@/components/share-profile-chip";
+import { CrossLinkPrivacy } from "@/components/cross-link-privacy";
 
 export const metadata = {
   title: "Your profile · Dilly Skills",
@@ -119,6 +120,16 @@ export default async function ProfilePage() {
 
   // Cache-bust the avatar when anything photo-related changes
   const hasPhotoBust = (profile?.photo_updated_at as string | undefined) ?? String(photoExists);
+
+  // Cross-link privacy flags — both default ON. Keep the read here so
+  // CrossLinkPrivacy mirrors server state on mount without a round-trip.
+  const rawWebSettings = profile?.web_profile_settings;
+  const webSettings =
+    rawWebSettings && typeof rawWebSettings === "object"
+      ? (rawWebSettings as Record<string, unknown>)
+      : {};
+  const showCareerDefault = webSettings.skills_show_career !== false;
+  const showLearningDefault = webSettings.skills_show_learning !== false;
 
   return (
     <div className="container-app pb-24 pt-10 sm:pt-16">
@@ -326,6 +337,21 @@ export default async function ProfilePage() {
           </ul>
         </Section>
       )}
+
+      {/* ═══ Cross-link to Dilly ═══ */}
+      <Section title="Connect with Dilly">
+        <p className="max-w-2xl text-sm text-[color:var(--color-muted)]">
+          Dilly Skills and your Dilly career profile share one identity but
+          stay separate views. You control which parts of each show up on
+          the other.
+        </p>
+        <div className="mt-5">
+          <CrossLinkPrivacy
+            initialShowCareer={showCareerDefault}
+            initialShowLearning={showLearningDefault}
+          />
+        </div>
+      </Section>
 
       {/* ═══ Footer meta + replace photo ═══ */}
       {photoExists && (
