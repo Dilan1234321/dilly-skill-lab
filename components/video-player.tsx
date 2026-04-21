@@ -210,6 +210,25 @@ export function VideoPlayer({
   return (
     <div className="relative aspect-video bg-black">
       <div ref={containerRef} className="h-full w-full" aria-label={title} />
+
+      {/* Covers YouTube's 'Watch on YouTube' pill that appears in the bottom-right
+          of the idle/paused player. Sits in the player container (outside the
+          iframe), so it stacks above YouTube's in-iframe overlay. Routes back
+          into the Dilly Skills experience instead of sending the user off to
+          YouTube. */}
+      <a
+        href="/"
+        className="group pointer-events-auto absolute bottom-2 right-2 z-10 inline-flex items-center gap-1.5 rounded-md bg-white/90 px-2 py-1 text-[0.65rem] font-bold text-[#1c2264] shadow-md backdrop-blur transition hover:bg-white sm:px-2.5 sm:text-xs"
+        style={{ fontFamily: "Satoshi, ui-sans-serif, system-ui, sans-serif" }}
+        aria-label="Open Dilly Skills"
+      >
+        <span
+          aria-hidden
+          className="inline-block h-1.5 w-1.5 rounded-full bg-[#1c2264] transition group-hover:scale-125"
+        />
+        dilly Skills
+      </a>
+
       {nextVideoId && nextVideoTitle && (
         <NextVideoBreak
           show={showBreak}
