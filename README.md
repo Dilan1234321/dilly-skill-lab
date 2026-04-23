@@ -59,7 +59,7 @@ LANGUAGES=en \
 python3 scripts/ingest.py
 ```
 
-YouTube free quota is 10k units/day. One language across 22 cohorts uses ~8k. Rotate `LANGUAGES` across days to fill non-English libraries over the course of a week.
+YouTube free quota is 10k units/day. English across 22 cohorts uses ~8k, which fits in one run. Non-English is deferred for now: the script still supports other language codes via `LANGUAGES`, but we're English-only until the core library is deeper.
 
 ## Development
 

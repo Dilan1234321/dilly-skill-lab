@@ -64,9 +64,10 @@ curated, calm). Not a roadmap - a bench.
   "Full-Stack Portfolio in 60 Days", "AI-First Marketer", "Operations with AI"
 
 ## Platform work
-- **Nightly cron**: wire `scripts/ingest.py` into the repo's `crons.json`
-  with `LANGUAGES` rotating across days so non-English libraries fill in over
-  a week while staying under the 10k/day YouTube quota
+- **Nightly cron**: wire `scripts/ingest.py` into the repo's `crons.json` on
+  `LANGUAGES=en`. Focus is English-only for now - depth of the core library
+  matters more than language breadth until the consumer surface is proven.
+  Multi-language rotation stays deferred as a future unlock.
 - **LLM quality stamp**: once per video, score "signal density" with Haiku.
   Replace or augment the algorithmic `quality_score`. Budget ~$5/month.
 - **Transcript search** (cohort-wide): ingest captions, index with tsvector,
